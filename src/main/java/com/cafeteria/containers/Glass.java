@@ -7,12 +7,12 @@ import lombok.*;
 @EqualsAndHashCode
 @RequiredArgsConstructor
 public class Glass implements IContainer{
-    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     private final ESizeContainer size;
     private float amount;
 
     @Override
     public String getSize() {
-        return null;
+        return String.format("%s%s", this.amount, this.size);
     }
 }
