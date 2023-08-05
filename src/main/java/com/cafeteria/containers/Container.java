@@ -15,23 +15,28 @@ import java.util.Set;
 @Setter
 @EqualsAndHashCode
 public abstract class Container implements IContainer {
-    protected final float amount;
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    protected final EContainerSize SIZE;
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    protected final EMeasureContainer MEASURE_SIZE;
     protected float actualAmount;
-    protected final ESizeContainer SIZE;
 
     @Setter(AccessLevel.NONE)
     protected IGrains content;
     @Setter(AccessLevel.NONE)
     protected Set<IComplement> complements;
 
-    protected Container(final ESizeContainer size, final float amount) {
-        this(size, amount, amount);
+    protected Container(final EMeasureContainer measure, final EContainerSize size, final float actualAmount) {
+        this.MEASURE_SIZE = measure;
+        this.SIZE = size;
+        this.actualAmount = actualAmount;
     }
 
-    protected Container(final ESizeContainer size, final float amount, final float actualAmount) {
-        this.amount = amount;
-        this.actualAmount = actualAmount;
-        this.SIZE = size;
+    @Override
+    public EContainerSize getSize() {
+        return this.SIZE;
     }
 
     public boolean setContent(IGrains content) {
@@ -54,11 +59,6 @@ public abstract class Container implements IContainer {
     public boolean removeComplement(IComplement c) {
         setComplement();
         return this.complements.remove(c);
-    }
-
-    @Override
-    public String getSize() {
-        return String.format("%.2f %s", this.amount, this.SIZE);
     }
 
     @Override

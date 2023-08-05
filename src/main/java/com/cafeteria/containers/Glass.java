@@ -5,7 +5,7 @@ import lombok.*;
 @Setter
 @Getter
 public class Glass extends Container{
-    public Glass(ESizeContainer size, float amount) {
-        super(size, amount);
+    public Glass(EMeasureContainer m, EContainerSize size, float amount) {
+        super(m, size, amount);
     }
 }

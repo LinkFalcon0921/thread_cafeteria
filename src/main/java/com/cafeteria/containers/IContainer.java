@@ -4,13 +4,13 @@ import com.cafeteria.complements.IComplement;
 import com.cafeteria.grains.IGrains;
 
 public interface IContainer {
-    String getSize();
+    float getActualAmount();
 
     IGrains getContent();
 
     boolean setContent(IGrains g);
 
-    float getAmount();
+    EContainerSize getSize();
 
     boolean addComplement(IComplement c);
 

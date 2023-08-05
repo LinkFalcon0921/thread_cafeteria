@@ -19,10 +19,13 @@ public class CoffeeMachine implements IMachine<Coffee> {
 
         // TODO: 8/5/2023
 
-        if(this.ruler.isApplicable(grains))
+        if (!this.ruler.isApplicable(container.getSize(), grains)) {
+            return container;
+        }
 
-
-        container.setContent(grains);
+        if (container.setContent(grains)) {
+            return container;
+        }
 
         for (IComplement c : complement) {
             container.addComplement(c);

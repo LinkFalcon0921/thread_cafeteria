@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 public class Cup extends Container {
 
-    public Cup(ESizeContainer size, float amount) {
-        super(size, amount);
+    public Cup(EMeasureContainer m, EContainerSize size, float amount) {
+        super(m, size, amount);
     }
 }

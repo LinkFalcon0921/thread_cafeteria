@@ -1,4 +1,4 @@
-package com.cafeteria.managers.ruler;
+package com.cafeteria.containers;
 
 public enum EContainerSize {
     SMALL,
