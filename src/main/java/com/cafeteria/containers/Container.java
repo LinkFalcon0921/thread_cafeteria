@@ -2,7 +2,6 @@ package com.cafeteria.containers;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Getter
@@ -26,5 +25,11 @@ public abstract class Container implements IContainer{
     @Override
     public String getSize() {
         return String.format("%.2f%s", this.amount, this.SIZE);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s: %s",
+                this.getClass().getSimpleName(), this.getSize());
     }
 }

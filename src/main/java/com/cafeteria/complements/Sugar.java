@@ -8,5 +8,6 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 public class Sugar {
-    private int amount;
+    private float amount;
+    private final EPortion portion;
 }
