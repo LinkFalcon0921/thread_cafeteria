@@ -1,7 +1,7 @@
 package com.cafeteria.complements;
 
 public interface IComplement {
-    int getAmount();
+    float getAmount();
 
     void increaseAmount(final int amount);
     void increaseAmount();

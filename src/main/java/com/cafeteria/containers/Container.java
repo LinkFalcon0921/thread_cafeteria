@@ -58,7 +58,7 @@ public abstract class Container implements IContainer {
 
     @Override
     public String getSize() {
-        return String.format("%.2f%s", this.amount, this.SIZE);
+        return String.format("%.2f %s", this.amount, this.SIZE);
     }
 
     @Override
