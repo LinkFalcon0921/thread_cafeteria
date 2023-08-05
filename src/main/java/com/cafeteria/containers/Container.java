@@ -1,6 +1,7 @@
 package com.cafeteria.containers;
 
 import com.cafeteria.complements.IComplement;
+import com.cafeteria.grains.IGrains;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -19,6 +20,8 @@ public abstract class Container implements IContainer {
     protected final ESizeContainer SIZE;
 
     @Setter(AccessLevel.NONE)
+    protected IGrains content;
+    @Setter(AccessLevel.NONE)
     protected Set<IComplement> complements;
 
     protected Container(final ESizeContainer size, final float amount) {
@@ -31,14 +34,26 @@ public abstract class Container implements IContainer {
         this.SIZE = size;
     }
 
-    @Override
-    public boolean addComplement(IComplement c, final int amount) {
-        return applyComplement(c, amount);
+    public boolean setContent(IGrains content) {
+        if (Objects.nonNull(this.content)) {
+            return false;
+        }
+
+        this.content = content;
+
+        return true;
     }
 
     @Override
-    public boolean removeComplement(IComplement c, final int amount) {
-        return applyComplement(c, -amount);
+    public boolean addComplement(IComplement c) {
+        setComplement();
+        return this.complements.add(c);
+    }
+
+    @Override
+    public boolean removeComplement(IComplement c) {
+        setComplement();
+        return this.complements.remove(c);
     }
 
     @Override
@@ -52,22 +67,9 @@ public abstract class Container implements IContainer {
                 this.getClass().getSimpleName(), this.getSize());
     }
 
-    private boolean applyComplement(IComplement c, int amount) {
+    private void setComplement() {
         if (Objects.isNull(this.complements)) {
             this.complements = new HashSet<>();
         }
-
-        boolean result = false;
-
-        for (IComplement complement : this.complements) {
-            if (complement.equals(c)) {
-
-                complement.increaseAmount(amount);
-
-                result = true;
-                break;
-            }
-        }
-        return result;
     }
 }
