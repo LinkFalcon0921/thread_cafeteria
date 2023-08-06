@@ -1,11 +1,18 @@
 package com.cafeteria.machines.coffee;
 
 import com.cafeteria.complements.IComplement;
+import com.cafeteria.containers.EContainerSize;
+import com.cafeteria.containers.EContainerType;
+import com.cafeteria.containers.EMeasureContainer;
 import com.cafeteria.containers.IContainer;
+import com.cafeteria.exceptions.containers.IssueMachineException;
 import com.cafeteria.grains.IGrains;
 
 import java.util.List;
 
+/** param EM Mixer Enum*/
 public interface IMachine<G extends IGrains> {
-    IContainer make(final G grains, final IContainer container, final List<IComplement> complement);
+    IContainer make(EContainerType type, EContainerSize containerSize, EMeasureContainer measure,
+                    final G grains, final List<IComplement> complement)
+            throws IssueMachineException;
 }

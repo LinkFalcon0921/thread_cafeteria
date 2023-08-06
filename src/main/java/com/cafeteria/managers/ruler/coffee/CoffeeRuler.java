@@ -17,4 +17,5 @@ public class CoffeeRuler implements RuleAmount {
 
         return result >= 0;
     }
+
 }
