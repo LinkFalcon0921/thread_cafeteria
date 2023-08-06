@@ -34,13 +34,12 @@ public abstract class Container implements IContainer {
     @Setter(AccessLevel.NONE)
     protected Set<IComplement> complements;
 
-    protected Container(final EMeasureContainer measure, final EContainerSize size, final float maxAmount) {
-        this(measure, size, maxAmount, 0f);
+    protected Container(final EContainerSize size, final float maxAmount) {
+        this(size, maxAmount, 0f);
     }
 
-    protected Container(final EMeasureContainer measure, final EContainerSize size,
-                        final float maxAmount, final float actualAmount) {
-        this.MEASURE_SIZE = measure;
+    protected Container(final EContainerSize size, final float maxAmount, final float actualAmount) {
+        this.MEASURE_SIZE = EMeasureContainer.OZ;
         this.SIZE = size;
         this.maxAmount = maxAmount;
         this.actualAmount = actualAmount;

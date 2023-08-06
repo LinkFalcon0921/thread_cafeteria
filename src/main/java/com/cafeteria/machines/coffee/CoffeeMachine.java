@@ -27,10 +27,7 @@ public class CoffeeMachine implements IMachine<Coffee> {
 
     @Override
     public IContainer make(EContainerType type, EContainerSize size,
-                           EMeasureContainer measure, Coffee grains,
-                           List<IComplement> complement) throws IssueMachineException {
-
-        // TODO: 8/5/2023
+                           Coffee grains, List<IComplement> complement) throws IssueMachineException {
 
         if (!this.ruler.isApplicable(size, grains)) {
             throw new IssueMachineException(Issues.NOT_ENOUGH_GRAINS);
@@ -38,15 +35,13 @@ public class CoffeeMachine implements IMachine<Coffee> {
 
         ContainerBuilder containerBuilder = ContainerBuilder.builder();
 
-
         // Set amount of coffee
-
         final ECoffeeMix coffeeMixer = ECoffeeMix.getMixerBySize(size);
         final float amountCoffee = this.mixer.mixGrains(coffeeMixer, grains);
 
+        // Create the container
         IContainer container = containerBuilder
                 .setSize(size)
-                .setMeasure(measure)
                 .setMaxAmount(amountCoffee)
                 .setActualAmount(amountCoffee)
                 .build(type);

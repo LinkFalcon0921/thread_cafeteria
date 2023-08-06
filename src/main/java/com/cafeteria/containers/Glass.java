@@ -1,14 +1,16 @@
 package com.cafeteria.containers;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Setter
 @Getter
-public class Glass extends Container{
-    public Glass(EMeasureContainer m, EContainerSize size, float maxAmount) {
-        super(m, size, maxAmount);
+public class Glass extends Container {
+    public Glass(EContainerSize size, float maxAmount) {
+        super(size, maxAmount);
     }
-    public Glass(EMeasureContainer m, EContainerSize size, float maxAmount, float actualAmount) {
-        super(m, size, maxAmount, actualAmount);
+
+    public Glass(EContainerSize size, float maxAmount, float actualAmount) {
+        super(size, maxAmount, actualAmount);
     }
 }

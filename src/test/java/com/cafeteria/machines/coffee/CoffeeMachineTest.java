@@ -20,23 +20,24 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class CoffeeMachineTest {
 
     private IMachine<Coffee> coffeeMachine;
+    private float sugarAmount;
 
     @BeforeEach
     void setUp() {
         this.coffeeMachine = new CoffeeMachine();
+        this.sugarAmount = new Random().nextFloat(4f);
     }
 
     @Test
     void createSimpleCoffeeWithSugar() {
 
         Coffee coffee = new Coffee(5);
-        Sugar sugar = new Sugar(new Random().nextFloat(4f), EPortion.tbsp);
+        Sugar sugar = new Sugar(sugarAmount, EPortion.tbsp);
 
         List<IComplement> complementPortions = List.of(sugar);
 
         IContainer cup = this.coffeeMachine.make(EContainerType.CUP,
                 EContainerSize.MEDIUM,
-                EMeasureContainer.OZ,
                 coffee,
                 complementPortions);
 

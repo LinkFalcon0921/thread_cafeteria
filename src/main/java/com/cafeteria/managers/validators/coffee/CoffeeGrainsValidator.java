@@ -7,14 +7,14 @@ import lombok.NonNull;
 public class CoffeeGrainsValidator implements ICoffeeGrainsValidator {
 
     @Override
-    public boolean isApplicable(@NonNull EContainerSize s, IGrains g) {
+    public boolean isApplicable(@NonNull EContainerSize s, @NonNull IGrains g) {
         int result = switch (s) {
-            case BIG -> Integer.compare(BIG_COFFEE_GRAINS, g.getAmount());
-            case MEDIUM -> Integer.compare(MEDIUM_COFFEE_GRAINS, g.getAmount());
-            case SMALL -> Integer.compare(SMALL_COFFEE_GRAINS, g.getAmount());
+            case BIG -> BIG_COFFEE_GRAINS;
+            case MEDIUM -> MEDIUM_COFFEE_GRAINS;
+            case SMALL -> SMALL_COFFEE_GRAINS;
         };
 
-        return result <= 0;
+        return result <= g.getAmount();
     }
 
 }

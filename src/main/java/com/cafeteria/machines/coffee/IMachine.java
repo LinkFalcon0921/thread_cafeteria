@@ -12,7 +12,6 @@ import java.util.List;
 
 /** @param <G> Grains Enum*/
 public interface IMachine<G extends IGrains> {
-    IContainer make(EContainerType type, EContainerSize containerSize, EMeasureContainer measure,
-                    final G grains, final List<IComplement> complement)
-            throws IssueMachineException;
+    IContainer make(EContainerType type, EContainerSize containerSize,
+                    final G grains, final List<IComplement> complement) throws IssueMachineException;
 }
