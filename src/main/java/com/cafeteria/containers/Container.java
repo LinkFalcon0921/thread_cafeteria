@@ -14,7 +14,7 @@ import java.util.Set;
 @Getter
 @Setter
 @EqualsAndHashCode
-public abstract class Container implements IContainer {
+public abstract class Container<ES extends Enum<ES>> implements IContainer<ES> {
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     protected final EContainerSize SIZE;
@@ -43,11 +43,6 @@ public abstract class Container implements IContainer {
         this.SIZE = size;
         this.maxAmount = maxAmount;
         this.actualAmount = actualAmount;
-    }
-
-    @Override
-    public EContainerSize getSize() {
-        return this.SIZE;
     }
 
     public boolean setGrains(IGrains content) {

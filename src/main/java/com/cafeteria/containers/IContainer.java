@@ -3,7 +3,7 @@ package com.cafeteria.containers;
 import com.cafeteria.complements.IComplement;
 import com.cafeteria.grains.IGrains;
 
-public interface IContainer {
+public interface IContainer<ES extends Enum<ES>> {
     float getActualAmount();
     void setActualAmount(float amount);
 
@@ -13,7 +13,7 @@ public interface IContainer {
 
     boolean setGrains(IGrains g);
 
-    EContainerSize getSize();
+    ES getSize();
 
     boolean addComplement(IComplement c);
 
