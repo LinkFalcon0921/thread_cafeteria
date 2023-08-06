@@ -5,30 +5,30 @@ import com.cafeteria.containers.EContainerSize;
 import com.cafeteria.containers.EContainerType;
 import com.cafeteria.containers.EMeasureContainer;
 import com.cafeteria.containers.IContainer;
-import com.cafeteria.exceptions.containers.IMessages;
 import com.cafeteria.exceptions.containers.IssueMachineException;
 import com.cafeteria.grains.coffee.Coffee;
 import com.cafeteria.managers.containers.ContainerBuilder;
 import com.cafeteria.managers.mixes.coffee.CoffeeMixer;
 import com.cafeteria.managers.mixes.coffee.ECoffeeMix;
-import com.cafeteria.managers.ruler.coffee.CoffeeRuler;
+import com.cafeteria.managers.validators.coffee.CoffeeGrainsValidator;
 
 import java.util.List;
 
-import static com.cafeteria.exceptions.containers.IMessages.*;
+import static com.cafeteria.exceptions.containers.IMessages.Issues;
 
-public class CoffeeMachine implements IMachine<ECoffeeMix, Coffee> {
-    private final CoffeeRuler ruler;
+public class CoffeeMachine implements IMachine<Coffee> {
+    private final CoffeeGrainsValidator ruler;
     private final CoffeeMixer mixer;
 
     public CoffeeMachine() {
-        this.ruler = new CoffeeRuler();
-        mixer = new CoffeeMixer();
+        this.ruler = new CoffeeGrainsValidator();
+        this.mixer = new CoffeeMixer();
     }
 
     @Override
-    public IContainer make(EContainerType type, EContainerSize size, EMeasureContainer measure, Coffee grains, List<IComplement> complement)
-            throws IssueMachineException {
+    public IContainer make(EContainerType type, EContainerSize size,
+                           EMeasureContainer measure, Coffee grains,
+                           List<IComplement> complement) throws IssueMachineException {
 
         // TODO: 8/5/2023
 
@@ -36,19 +36,22 @@ public class CoffeeMachine implements IMachine<ECoffeeMix, Coffee> {
             throw new IssueMachineException(Issues.NOT_ENOUGH_GRAINS);
         }
 
-        IContainer container = ContainerBuilder.builder()
-                .setSize(size)
-                .setMeasure(measure)
-                .setMaxAmount()
-                .build(type);
+        ContainerBuilder containerBuilder = ContainerBuilder.builder();
 
-        if (!container.setGrains(grains)) {
-            return container;
-        }
 
         // Set amount of coffee
-        final float amountCoffee = this.mixer.mixGrains(ECoffeeMix.BIG, grains);
-        container.setActualAmount(amountCoffee);
+
+        final ECoffeeMix coffeeMixer = ECoffeeMix.getMixerBySize(size);
+        final float amountCoffee = this.mixer.mixGrains(coffeeMixer, grains);
+
+        IContainer container = containerBuilder
+                .setSize(size)
+                .setMeasure(measure)
+                .setMaxAmount(amountCoffee)
+                .setActualAmount(amountCoffee)
+                .build(type);
+
+        container.setGrains(grains);
 
         // Add complements
         for (IComplement c : complement) {

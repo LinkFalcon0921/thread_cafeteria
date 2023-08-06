@@ -4,22 +4,23 @@ package com.cafeteria.machines.coffee;
 import com.cafeteria.complements.EPortion;
 import com.cafeteria.complements.IComplement;
 import com.cafeteria.complements.Sugar;
-import com.cafeteria.containers.Cup;
 import com.cafeteria.containers.EContainerSize;
+import com.cafeteria.containers.EContainerType;
 import com.cafeteria.containers.EMeasureContainer;
 import com.cafeteria.containers.IContainer;
 import com.cafeteria.grains.coffee.Coffee;
-import com.cafeteria.managers.ruler.RuleAmount;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Random;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 class CoffeeMachineTest {
 
     private IMachine<Coffee> coffeeMachine;
+
     @BeforeEach
     void setUp() {
         this.coffeeMachine = new CoffeeMachine();
@@ -33,11 +34,13 @@ class CoffeeMachineTest {
 
         List<IComplement> complementPortions = List.of(sugar);
 
-        IContainer cup = new Cup(EMeasureContainer.ML, EContainerSize.MEDIUM, RuleAmount.MEDIUM_COFFEE_GRAINS);
+        IContainer cup = this.coffeeMachine.make(EContainerType.CUP,
+                EContainerSize.MEDIUM,
+                EMeasureContainer.OZ,
+                coffee,
+                complementPortions);
 
-        cup = this.coffeeMachine.make(coffee, cup, complementPortions);
-
-        Assertions.assertNotNull(cup.getGrains());
+        assertNotNull(cup.getGrains());
 
         System.out.println(cup.getSize());
     }

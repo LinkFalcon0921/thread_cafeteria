@@ -8,7 +8,4 @@ public class CoffeeMixer implements IMixer<ECoffeeMix, Coffee> {
     public float mixGrains(@NonNull ECoffeeMix e, @NonNull Coffee g) {
         return g.getAmount() * e.MIX_VAL;
     }
-
-
-
 }

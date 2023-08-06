@@ -10,7 +10,7 @@ import com.cafeteria.grains.IGrains;
 
 import java.util.List;
 
-/** param EM Mixer Enum*/
+/** @param <G> Grains Enum*/
 public interface IMachine<G extends IGrains> {
     IContainer make(EContainerType type, EContainerSize containerSize, EMeasureContainer measure,
                     final G grains, final List<IComplement> complement)
