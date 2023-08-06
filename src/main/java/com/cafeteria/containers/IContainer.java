@@ -5,10 +5,13 @@ import com.cafeteria.grains.IGrains;
 
 public interface IContainer {
     float getActualAmount();
+    void setActualAmount(float amount);
 
-    IGrains getContent();
+    void fill(float amount);
 
-    boolean setContent(IGrains g);
+    IGrains getGrains();
+
+    boolean setGrains(IGrains g);
 
     EContainerSize getSize();
 

@@ -18,19 +18,31 @@ public abstract class Container implements IContainer {
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     protected final EContainerSize SIZE;
+
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     protected final EMeasureContainer MEASURE_SIZE;
+
     protected float actualAmount;
 
     @Setter(AccessLevel.NONE)
-    protected IGrains content;
+    protected final float maxAmount;
+
+    @Setter(AccessLevel.NONE)
+    protected IGrains grains;
+
     @Setter(AccessLevel.NONE)
     protected Set<IComplement> complements;
 
-    protected Container(final EMeasureContainer measure, final EContainerSize size, final float actualAmount) {
+    protected Container(final EMeasureContainer measure, final EContainerSize size, final float maxAmount) {
+        this(measure, size, maxAmount, 0f);
+    }
+
+    protected Container(final EMeasureContainer measure, final EContainerSize size,
+                        final float maxAmount, final float actualAmount) {
         this.MEASURE_SIZE = measure;
         this.SIZE = size;
+        this.maxAmount = maxAmount;
         this.actualAmount = actualAmount;
     }
 
@@ -39,14 +51,29 @@ public abstract class Container implements IContainer {
         return this.SIZE;
     }
 
-    public boolean setContent(IGrains content) {
-        if (Objects.nonNull(this.content)) {
+    public boolean setGrains(IGrains content) {
+        if (Objects.nonNull(this.grains)) {
             return false;
         }
 
-        this.content = content;
+        this.grains = content;
 
         return true;
+    }
+
+    @Override
+    public void fill(float amount) {
+
+        // If the amount is higher than the max content
+        // If the actual amount is equals than the max content
+        // then do nothing
+        if (Float.compare(this.actualAmount, amount) > 0
+                && Float.compare(this.actualAmount, this.maxAmount) == 0) {
+            return;
+        }
+
+        // Fill the container
+        this.actualAmount = this.actualAmount + Math.abs(this.maxAmount - amount);
     }
 
     @Override

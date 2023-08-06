@@ -26,7 +26,7 @@ class CoffeeMachineTest {
     }
 
     @Test
-    void createSimpleCoffee() {
+    void createSimpleCoffeeWithSugar() {
 
         Coffee coffee = new Coffee(5);
         Sugar sugar = new Sugar(new Random().nextFloat(4f), EPortion.tbsp);
@@ -37,7 +37,7 @@ class CoffeeMachineTest {
 
         cup = this.coffeeMachine.make(coffee, cup, complementPortions);
 
-        Assertions.assertNotNull(cup.getContent());
+        Assertions.assertNotNull(cup.getGrains());
 
         System.out.println(cup.getSize());
     }
