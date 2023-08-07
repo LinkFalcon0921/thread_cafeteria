@@ -14,6 +14,9 @@ public class Sugar implements IComplement {
     private final EPortion portion;
     private float amount;
 
+    public Sugar(float amount) {
+        this(EPortion.tbsp, amount);
+    }
 
     @Override
     public boolean fill(@NonNull IComplement complement) {

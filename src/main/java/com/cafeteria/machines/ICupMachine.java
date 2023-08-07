@@ -9,6 +9,6 @@ import com.cafeteria.grains.IGrain;
 
 import java.util.List;
 
-public interface ICupMachine<C extends Cup> {
+public interface ICupMachine<C extends Cup> extends IMachine{
     C prepareCup(EContainerSize containerSize, final List<IComplement> complement) throws IssueMachineException;
 }

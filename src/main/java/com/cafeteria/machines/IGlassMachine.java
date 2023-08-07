@@ -7,7 +7,7 @@ import com.cafeteria.exceptions.containers.IssueMachineException;
 
 import java.util.List;
 
-public interface IGlassMachine<G extends Glass> {
+public interface IGlassMachine<G extends Glass> extends IMachine{
     G prepareGlass(EContainerSize containerSize,
                    final List<IComplement> complement) throws IssueMachineException;
 }

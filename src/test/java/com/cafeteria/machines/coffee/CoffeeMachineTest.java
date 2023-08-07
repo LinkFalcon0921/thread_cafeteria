@@ -19,18 +19,26 @@ class CoffeeMachineTest {
 
     private CoffeeMachine coffeeMachine;
     private float sugarAmount;
+    private Coffee coffeeByDefault;
+    private Sugar sugarByDefault;
 
     @BeforeEach
     void setUp() {
+        Random random = new Random();
+
         this.coffeeMachine = new CoffeeMachine();
-        this.sugarAmount = new Random().nextFloat(4f);
+        this.sugarAmount = random.nextFloat(4f);
+        this.coffeeByDefault = new Coffee(random.nextInt(40) * 5 + 40);
+        this.sugarByDefault = new Sugar(sugarAmount * 10f);
+
+        this.coffeeMachine.fillGrainStock(coffeeByDefault);
+        this.coffeeMachine.fillComponentStock(sugarByDefault);
     }
 
     @Test
     void createSimpleCoffeeCupWithSugar() {
 
-        Coffee coffee = new Coffee(5);
-        Sugar sugar = new Sugar(sugarAmount, EPortion.tbsp);
+        Sugar sugar = new Sugar(EPortion.tbsp, sugarAmount);
 
         List<IComplement> complementPortions = List.of(sugar);
 
@@ -38,6 +46,7 @@ class CoffeeMachineTest {
                 complementPortions);
 
         assertNotNull(cup.getGrains());
+        assertNotNull(cup.getComplements());
 
         System.out.println(cup.getSize());
     }
