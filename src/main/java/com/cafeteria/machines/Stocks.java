@@ -4,19 +4,18 @@ import com.cafeteria.complements.EComplementType;
 import com.cafeteria.complements.IComplement;
 import com.cafeteria.grains.EGrainsType;
 import com.cafeteria.grains.IGrain;
+import lombok.NoArgsConstructor;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
+@NoArgsConstructor
 public class Stocks {
 
     private Set<IGrain> grainsStock;
     private Set<IComplement> complementStock;
-
-    public Stocks() {
-    }
 
     public boolean addGrains(IGrain g) {
         initiateGrainStock();
@@ -28,7 +27,7 @@ public class Stocks {
 
         for (IGrain grain : this.grainsStock) {
             if (grain.equals(g)) {
-                grain.fill(g.getAmount());
+                grain.fill(g);
                 return true;
             }
         }
@@ -46,7 +45,7 @@ public class Stocks {
 
         for (IComplement complement : this.complementStock) {
             if (complement.equals(c)) {
-                complement.fill(c.getAmount());
+                complement.fill(c);
                 return true;
             }
         }

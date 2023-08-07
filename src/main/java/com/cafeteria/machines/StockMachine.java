@@ -8,6 +8,7 @@ import com.cafeteria.grains.IGrain;
 import java.util.List;
 import java.util.Optional;
 
+@SuppressWarnings("unchecked")
 public class StockMachine {
     private final Stocks stocks;
 
@@ -26,8 +27,7 @@ public class StockMachine {
 
     public boolean addGrains(List<IGrain> gList) {
         try {
-            gList.forEach(this::addStock);
-            return true;
+            return gList.stream().allMatch(this::addStock);
         } catch (Exception e) {
             return false;
         }
@@ -44,8 +44,7 @@ public class StockMachine {
 
     public boolean addComplements(List<IComplement> cList) {
         try {
-            cList.forEach(this::addStock);
-            return true;
+            return cList.stream().allMatch(this::addStock);
         } catch (Exception e) {
             return false;
         }
