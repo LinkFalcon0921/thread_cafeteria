@@ -2,8 +2,14 @@ package com.cafeteria.machines;
 
 import com.cafeteria.complements.EComplementType;
 import com.cafeteria.complements.IComplement;
+import com.cafeteria.containers.EContainerSize;
+import com.cafeteria.containers.EContainerType;
+import com.cafeteria.exceptions.containers.creators.IssueMachineExceptionCreator;
 import com.cafeteria.grains.EGrainsType;
 import com.cafeteria.grains.IGrain;
+import com.cafeteria.grains.coffee.Coffee;
+import com.cafeteria.managers.validators.coffee.CoffeeGrainValidator;
+import com.cafeteria.managers.validators.complements.ComplementValidator;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,9 +17,15 @@ import java.util.Optional;
 @SuppressWarnings("unchecked")
 public class StockMachine {
     private final Stocks stocks;
+    private final CoffeeGrainValidator coffeeRuler;
+//    private final ComplementValidator complementValidator;
+    private IssueMachineExceptionCreator EXCEPTION_CREATOR;
 
     public StockMachine() {
         stocks = new Stocks();
+        this.coffeeRuler = new CoffeeGrainValidator();
+//        this.complementValidator = new ComplementValidator();
+        this.EXCEPTION_CREATOR = IssueMachineExceptionCreator.getCreator();
     }
 
     public boolean addStock(IGrain g) {
@@ -50,12 +62,24 @@ public class StockMachine {
         }
     }
 
-    public <G extends IGrain> Optional<G> getStock(EGrainsType g, int amount) {
-        return (Optional<G>) this.stocks.getGrain(g, amount);
+    public <G extends IGrain> Optional<G> getStock(EGrainsType grainsType, EContainerType containerType,
+                                                   EContainerSize containerSize) {
+
+        Optional<Coffee> stocksGrain = this.stocks.getGrain(grainsType);
+
+        final int requiredGrains = this.coffeeRuler
+                .getRequiredGrain(containerType, containerSize)
+                .getRequiredGrains();
+
+        if (!this.coffeeRuler.isThereEnough(stocksGrain, requiredGrains)) {
+            throw EXCEPTION_CREATOR.createNoEnoughGrainsException();
+        }
+
+        return (Optional<G>) stocksGrain.orElseThrow().withdraw(requiredGrains);
     }
 
     public <C extends IComplement> Optional<C> getStock(EComplementType c, float amount) {
-        return (Optional<C>) this.stocks.getComplement(c, amount);
+        return (Optional<C>) this.stocks.getComplement(c).orElseThrow().withdraw(amount);
     }
 
     public int getStockOf(EGrainsType g) {

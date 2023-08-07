@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public class Coffee extends Grain {
     public Coffee(int amount) {
-        super(EGrainsType.CAFE, amount);
+        super(EGrainsType.COFFEE, amount);
     }
 
     @Override

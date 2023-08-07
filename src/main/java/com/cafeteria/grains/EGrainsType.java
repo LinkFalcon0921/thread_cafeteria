@@ -1,6 +1,6 @@
 package com.cafeteria.grains;
 
 public enum EGrainsType {
-    CAFE,
+    COFFEE,
     TEA
 }

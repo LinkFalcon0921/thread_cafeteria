@@ -3,6 +3,7 @@ package com.cafeteria.machines;
 import com.cafeteria.complements.EComplementType;
 import com.cafeteria.complements.IComplement;
 import com.cafeteria.grains.EGrainsType;
+import com.cafeteria.grains.Grain;
 import com.cafeteria.grains.IGrain;
 import lombok.NoArgsConstructor;
 
@@ -53,10 +54,10 @@ public class Stocks {
         return false;
     }
 
-    public Optional<IGrain> getGrain(EGrainsType type) {
+    public <G extends IGrain> Optional<G> getGrain(EGrainsType type) {
         for (IGrain grain : this.grainsStock) {
             if (grain.isTypeOf(type)) {
-                return Optional.of(grain);
+                return (Optional<G>) Optional.of(grain);
             }
         }
 
@@ -81,6 +82,8 @@ public class Stocks {
     public boolean containsStock(IGrain g) {
         return this.grainsStock.contains(g);
     }
+
+    // PRIVATE METHODS
 
     private void initiateGrainStock() {
         if (Objects.nonNull(this.grainsStock)) {
