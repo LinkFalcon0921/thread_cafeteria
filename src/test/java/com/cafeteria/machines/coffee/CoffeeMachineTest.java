@@ -5,9 +5,7 @@ import com.cafeteria.complements.EPortion;
 import com.cafeteria.complements.IComplement;
 import com.cafeteria.complements.Sugar;
 import com.cafeteria.containers.EContainerSize;
-import com.cafeteria.containers.EContainerType;
-import com.cafeteria.containers.EMeasureContainer;
-import com.cafeteria.containers.IContainer;
+import com.cafeteria.containers.coffee.CoffeeCup;
 import com.cafeteria.grains.coffee.Coffee;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class CoffeeMachineTest {
 
-    private IMachine<Coffee> coffeeMachine;
+    private CoffeeMachine coffeeMachine;
     private float sugarAmount;
 
     @BeforeEach
@@ -29,16 +27,14 @@ class CoffeeMachineTest {
     }
 
     @Test
-    void createSimpleCoffeeWithSugar() {
+    void createSimpleCoffeeCupWithSugar() {
 
         Coffee coffee = new Coffee(5);
         Sugar sugar = new Sugar(sugarAmount, EPortion.tbsp);
 
         List<IComplement> complementPortions = List.of(sugar);
 
-        IContainer cup = this.coffeeMachine.make(EContainerType.CUP,
-                EContainerSize.MEDIUM,
-                coffee,
+        CoffeeCup cup = this.coffeeMachine.prepareCup(EContainerSize.MEDIUM,
                 complementPortions);
 
         assertNotNull(cup.getGrains());

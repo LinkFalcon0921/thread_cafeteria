@@ -60,11 +60,12 @@ public class CoffeeMachine implements ICoffeeCupMachine, ICoffeeGlassMachine {
 
     private <B extends IContainerBuilder<C, ES>, ES extends Enum<ES>, C extends IContainer<ES>>
     C prepareContainer(@NonNull B builder, EContainerSize size) {
+
         // Set amount of coffee
         final ECoffeeMix coffeeMixer = ECoffeeMix.getBySize(size);
-        Optional<Coffee> grain = this.stocks.getStock(EGrainsType.CAFE);
+        Optional<Coffee> coffee = this.stocks.getStock(EGrainsType.CAFE);
 
-        final float amountCoffee = this.mixer.mixGrains(coffeeMixer, grain.get());
+        final float amountCoffee = this.mixer.mixGrains(coffeeMixer, coffee.get());
 
         // Create the container
         C container = builder
@@ -73,7 +74,7 @@ public class CoffeeMachine implements ICoffeeCupMachine, ICoffeeGlassMachine {
                 .setActualAmount(amountCoffee)
                 .prepare();
 
-        container.setGrains(grain.get());
+        container.setGrains(coffee.get());
 
         return container;
     }
