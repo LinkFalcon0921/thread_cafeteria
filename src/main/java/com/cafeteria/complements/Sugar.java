@@ -12,22 +12,27 @@ public class Sugar implements IComplement{
     private final EPortion portion;
 
     @Override
-    public void increaseAmount(int amount) {
-        setAmount(getAmount() + amount);
+    public void fill(Float amount) {
+        this.amount += amount;
     }
 
     @Override
-    public void increaseAmount() {
-        increaseAmount(1);
+    public Float withdraw(Float amount) {
+        if(this.amount <= amount){
+            this.amount -= amount;
+            return amount;
+        }
+
+        return 0f;
     }
 
     @Override
-    public void decreaseAmount(int amount) {
-        setAmount(getAmount() - amount);
+    public boolean isTypeOf(EComplementType type) {
+        return getType().equals(type);
     }
 
     @Override
-    public void decreaseAmount() {
-        decreaseAmount(1);
+    public EComplementType getType() {
+        return EComplementType.SUGAR;
     }
 }

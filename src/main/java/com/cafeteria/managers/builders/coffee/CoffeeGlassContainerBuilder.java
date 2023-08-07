@@ -3,12 +3,13 @@ package com.cafeteria.managers.builders.coffee;
 import com.cafeteria.containers.EContainerSize;
 import com.cafeteria.containers.coffee.CoffeeCup;
 import com.cafeteria.containers.coffee.CoffeeGlass;
+import com.cafeteria.containers.sizes.coffee.ECoffeeGlassSize;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class CoffeeGlassContainerBuilder {
+public class CoffeeGlassContainerBuilder implements IContainerBuilder<CoffeeGlass, ECoffeeGlassSize> {
     private EContainerSize size;
     private float actualAmount;
     private float maxAmount;

@@ -1,10 +1,11 @@
 package com.cafeteria.complements;
 
-public interface IComplement {
+import com.cafeteria.fields.IStackable;
+
+public interface IComplement extends IStackable<Float> {
     float getAmount();
 
-    void increaseAmount(final int amount);
-    void increaseAmount();
-    void decreaseAmount(final int amount);
-    void decreaseAmount();
+    boolean isTypeOf(EComplementType type);
+
+    EComplementType getType();
 }

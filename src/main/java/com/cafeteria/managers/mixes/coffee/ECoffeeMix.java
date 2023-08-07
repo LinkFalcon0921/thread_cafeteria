@@ -13,7 +13,7 @@ public enum ECoffeeMix {
         this.MIX_VAL = value;
     }
 
-    public static ECoffeeMix getMixerBySize(EContainerSize size) throws IllegalArgumentException{
+    public static ECoffeeMix getBySize(EContainerSize size) throws IllegalArgumentException{
         return ECoffeeMix.valueOf(size.name());
     }
 }

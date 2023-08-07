@@ -1,7 +1,7 @@
 package com.cafeteria.containers;
 
 import com.cafeteria.complements.IComplement;
-import com.cafeteria.grains.IGrains;
+import com.cafeteria.grains.IGrain;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -29,7 +29,7 @@ public abstract class Container<ES extends Enum<ES>> implements IContainer<ES> {
     protected final float maxAmount;
 
     @Setter(AccessLevel.NONE)
-    protected IGrains grains;
+    protected IGrain grains;
 
     @Setter(AccessLevel.NONE)
     protected Set<IComplement> complements;
@@ -45,7 +45,7 @@ public abstract class Container<ES extends Enum<ES>> implements IContainer<ES> {
         this.actualAmount = actualAmount;
     }
 
-    public boolean setGrains(IGrains content) {
+    public boolean setGrains(IGrain content) {
         if (Objects.nonNull(this.grains)) {
             return false;
         }
