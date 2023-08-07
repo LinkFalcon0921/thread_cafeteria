@@ -2,6 +2,7 @@ package com.cafeteria.machines.coffee;
 
 import com.cafeteria.complements.IComplement;
 import com.cafeteria.containers.EContainerSize;
+import com.cafeteria.containers.EContainerType;
 import com.cafeteria.containers.IContainer;
 import com.cafeteria.containers.coffee.CoffeeCup;
 import com.cafeteria.containers.coffee.CoffeeGlass;
@@ -28,10 +29,10 @@ public class CoffeeMachine implements ICoffeeCupMachine, ICoffeeGlassMachine {
     private final ComplementValidator complementValidator;
 
     public CoffeeMachine() {
-        this.coffeeRuler = new CoffeeGrainsValidator();
         this.mixer = new CoffeeMixer();
         this.stocks = new StockMachine();
-        complementValidator = new ComplementValidator();
+        this.coffeeRuler = new CoffeeGrainsValidator();
+        this.complementValidator = new ComplementValidator();
     }
 
     @Override
@@ -40,7 +41,7 @@ public class CoffeeMachine implements ICoffeeCupMachine, ICoffeeGlassMachine {
 
         checkIngredients(size, complements);
 
-        return prepareContainer(CoffeeCupContainerBuilder.builder(), size);
+        return prepareContainer(CoffeeCupContainerBuilder.builder(), size, EContainerType.CUP);
     }
 
     @Override
@@ -49,31 +50,33 @@ public class CoffeeMachine implements ICoffeeCupMachine, ICoffeeGlassMachine {
 
         checkIngredients(size, complements);
 
-        return prepareContainer(CoffeeGlassContainerBuilder.builder(), size);
+        return prepareContainer(CoffeeGlassContainerBuilder.builder(), size, EContainerType.GLASS);
     }
 
     private void checkIngredients(EContainerSize size, final List<IComplement> complements) throws IssueMachineException {
         // TODO: 8/6/2023 capture exceptions
-        this.coffeeRuler.checkGrain(this.stocks, size);
+        this.coffeeRuler.checkGrain(this.coffeeRuler, this.stocks, size);
         this.complementValidator.checkIngredients(this.stocks, complements);
     }
 
     private <B extends IContainerBuilder<C, ES>, ES extends Enum<ES>, C extends IContainer<ES>>
-    C prepareContainer(@NonNull B builder, EContainerSize size) {
+    C prepareContainer(@NonNull B builder, EContainerSize containerSize, EContainerType containerType) {
 
         // Set amount of coffee
-        final ECoffeeMix coffeeMixer = ECoffeeMix.getBySize(size);
+        final ECoffeeMix coffeeMixer = ECoffeeMix.getBySize(containerSize);
+
         Optional<Coffee> coffee = this.stocks.getStock(EGrainsType.CAFE);
 
-        final float amountCoffee = this.mixer.mixGrains(coffeeMixer, coffee.get());
+        final float amountCoffee = this.mixer.mixGrains(coffeeMixer, coffee);
 
         // Create the container
         C container = builder
-                .setSize(size)
+                .setSize(containerSize)
                 .setMaxAmount(amountCoffee)
                 .setActualAmount(amountCoffee)
                 .prepare();
 
+        // Add the grains.
         container.setGrains(coffee.get());
 
         return container;

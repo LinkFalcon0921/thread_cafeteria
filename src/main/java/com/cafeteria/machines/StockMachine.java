@@ -50,11 +50,19 @@ public class StockMachine {
         }
     }
 
-    public <G extends IGrain> Optional<G> getStock(EGrainsType g) {
-        return (Optional<G>) this.stocks.getGrain(g);
+    public <G extends IGrain> Optional<G> getStock(EGrainsType g, int amount) {
+        return (Optional<G>) this.stocks.getGrain(g, amount);
     }
 
-    public <C extends IComplement> Optional<C> getStock(EComplementType c) {
-        return (Optional<C>) this.stocks.getComplement(c);
+    public <C extends IComplement> Optional<C> getStock(EComplementType c, float amount) {
+        return (Optional<C>) this.stocks.getComplement(c, amount);
+    }
+
+    public int getStockOf(EGrainsType g) {
+        return this.stocks.getGrain(g).orElseThrow().getAmount();
+    }
+
+    public float getStockOf(EComplementType c) {
+        return this.stocks.getComplement(c).orElseThrow().getAmount();
     }
 }
