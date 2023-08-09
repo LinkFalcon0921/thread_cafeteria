@@ -1,4 +1,4 @@
-package com.cafeteria.machines;
+package com.cafeteria.machines.stocks;
 
 import com.cafeteria.complements.EComplementType;
 import com.cafeteria.complements.IComplement;
@@ -10,7 +10,6 @@ import com.cafeteria.grains.EGrainsType;
 import com.cafeteria.grains.IGrain;
 import com.cafeteria.grains.coffee.Coffee;
 import com.cafeteria.managers.validators.coffee.CoffeeGrainValidator;
-import com.cafeteria.managers.validators.complements.ComplementValidator;
 
 import java.util.List;
 import java.util.Optional;

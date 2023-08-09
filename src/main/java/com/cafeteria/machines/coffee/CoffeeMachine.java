@@ -11,7 +11,7 @@ import com.cafeteria.exceptions.stocks.UndoneException;
 import com.cafeteria.grains.EGrainsType;
 import com.cafeteria.grains.IGrain;
 import com.cafeteria.grains.coffee.Coffee;
-import com.cafeteria.machines.StockMachine;
+import com.cafeteria.machines.stocks.StockMachine;
 import com.cafeteria.managers.builders.coffee.CoffeeCupContainerBuilder;
 import com.cafeteria.managers.builders.coffee.CoffeeGlassContainerBuilder;
 import com.cafeteria.managers.builders.coffee.IContainerBuilder;

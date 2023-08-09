@@ -3,10 +3,9 @@ package com.cafeteria.managers.validators.complements;
 import com.cafeteria.complements.IComplement;
 import com.cafeteria.exceptions.containers.IssueMachineException;
 import com.cafeteria.exceptions.containers.creators.IssueMachineExceptionCreator;
-import com.cafeteria.machines.StockMachine;
+import com.cafeteria.machines.stocks.StockMachine;
 
 import java.util.List;
-import java.util.Optional;
 
 public class ComplementValidator {
 

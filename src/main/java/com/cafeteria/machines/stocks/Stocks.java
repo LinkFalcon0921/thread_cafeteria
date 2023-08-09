@@ -1,18 +1,21 @@
-package com.cafeteria.machines;
+package com.cafeteria.machines.stocks;
 
+import com.cafeteria.actioners.iterators.IteratorManager;
 import com.cafeteria.complements.EComplementType;
 import com.cafeteria.complements.IComplement;
 import com.cafeteria.exceptions.IMessages;
 import com.cafeteria.exceptions.stocks.UndoneException;
 import com.cafeteria.grains.EGrainsType;
-import com.cafeteria.grains.Grain;
 import com.cafeteria.grains.IGrain;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 @NoArgsConstructor
 public class Stocks {
@@ -21,9 +24,13 @@ public class Stocks {
     private Set<IComplement> complementStock;
 
     public boolean addGrains(IGrain g) {
+        if (Objects.isNull(g)) {
+            return false;
+        }
+
         initiateGrainStock();
 
-        if (!containsStock(g)) {
+        if (!this.containsStock(g.getType())) {
             this.grainsStock.add(g);
             return true;
         }
@@ -39,9 +46,13 @@ public class Stocks {
     }
 
     public boolean addComplements(IComplement c) {
+        if (Objects.isNull(c)) {
+            return false;
+        }
+
         initiateComplementStock();
 
-        if (!containsStock(c)) {
+        if (!this.containsStock(c.getType())) {
             this.complementStock.add(c);
             return true;
         }
@@ -77,12 +88,20 @@ public class Stocks {
     }
 
 
-    public boolean containsStock(IComplement c) {
-        return this.complementStock.contains(c);
+    public boolean containsStock(@NonNull EGrainsType g) {
+        Predicate<IGrain> checker = grain -> grain.isTypeOf(g);
+        Function<IGrain, Boolean> action = grainType -> grainType.isTypeOf(g);
+
+        return IteratorManager.create(this.grainsStock)
+                .iterateToGet(action, checker).orElseThrow();
     }
 
-    public boolean containsStock(IGrain g) {
-        return this.grainsStock.contains(g);
+    public boolean containsStock(@NonNull EComplementType c) {
+        Predicate<IComplement> checker = grain -> grain.isTypeOf(c);
+        Function<IComplement, Boolean> action = grainType -> grainType.isTypeOf(c);
+
+        return IteratorManager.create(this.complementStock)
+                .iterateToGet(action, checker).orElseThrow();
     }
 
     // PRIVATE METHODS
@@ -104,14 +123,14 @@ public class Stocks {
     }
 
     public void reset() throws UndoneException {
-        try{
-            if(Objects.nonNull(this.grainsStock)){
+        try {
+            if (Objects.nonNull(this.grainsStock)) {
                 this.grainsStock.clear();
             }
-            if(Objects.nonNull(this.complementStock)){
+            if (Objects.nonNull(this.complementStock)) {
                 this.complementStock.clear();
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new UndoneException(IMessages.INoDone.MACHINE_UNABLE_CLEAN);
         }
     }
