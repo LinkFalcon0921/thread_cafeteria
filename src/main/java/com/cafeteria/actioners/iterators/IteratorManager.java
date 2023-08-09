@@ -23,7 +23,7 @@ public class IteratorManager<E> {
     }
 
     public <R> Optional<R> iterateToGet(@NonNull Function<E, R> action, @NotNull Predicate<E> validator) {
-        if (this.collection.size() > 100) {
+        if (this.collection.size() < 70) {
             return this.iterateByFor(action, validator);
         }
 
@@ -45,5 +45,18 @@ public class IteratorManager<E> {
                 .filter(validator)
                 .findFirst()
                 .map(action);
+    }
+
+    public boolean checkIfMatch(Predicate<E> checker) {
+        boolean value = false;
+
+        for (E e : this.collection) {
+            if (checker.test(e)) {
+                value = true;
+                break;
+            }
+        }
+
+        return value;
     }
 }

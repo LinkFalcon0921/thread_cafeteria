@@ -14,7 +14,6 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.function.Predicate;
 
 @NoArgsConstructor
@@ -37,8 +36,7 @@ public class Stocks {
 
         for (IGrain grain : this.grainsStock) {
             if (grain.equals(g)) {
-                grain.fill(g);
-                return true;
+                return grain.fill(g);
             }
         }
 
@@ -59,8 +57,7 @@ public class Stocks {
 
         for (IComplement complement : this.complementStock) {
             if (complement.equals(c)) {
-                complement.fill(c);
-                return true;
+                return complement.fill(c);
             }
         }
 
@@ -90,18 +87,16 @@ public class Stocks {
 
     public boolean containsStock(@NonNull EGrainsType g) {
         Predicate<IGrain> checker = grain -> grain.isTypeOf(g);
-        Function<IGrain, Boolean> action = grainType -> grainType.isTypeOf(g);
 
         return IteratorManager.create(this.grainsStock)
-                .iterateToGet(action, checker).orElseThrow();
+                .checkIfMatch(checker);
     }
 
     public boolean containsStock(@NonNull EComplementType c) {
         Predicate<IComplement> checker = grain -> grain.isTypeOf(c);
-        Function<IComplement, Boolean> action = grainType -> grainType.isTypeOf(c);
 
         return IteratorManager.create(this.complementStock)
-                .iterateToGet(action, checker).orElseThrow();
+                .checkIfMatch(checker);
     }
 
     // PRIVATE METHODS
@@ -122,11 +117,12 @@ public class Stocks {
         this.complementStock = new HashSet<>();
     }
 
-    public void reset() throws UndoneException {
+    public void cleanUp() throws UndoneException {
         try {
             if (Objects.nonNull(this.grainsStock)) {
                 this.grainsStock.clear();
             }
+
             if (Objects.nonNull(this.complementStock)) {
                 this.complementStock.clear();
             }

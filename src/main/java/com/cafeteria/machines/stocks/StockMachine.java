@@ -18,7 +18,7 @@ import java.util.Optional;
 public class StockMachine {
     private final Stocks stocks;
     private final CoffeeGrainValidator coffeeRuler;
-//    private final ComplementValidator complementValidator;
+    //    private final ComplementValidator complementValidator;
     private IssueMachineExceptionCreator EXCEPTION_CREATOR;
 
     public StockMachine() {
@@ -30,8 +30,7 @@ public class StockMachine {
 
     public boolean addStock(IGrain g) {
         try {
-            this.stocks.addGrains(g);
-            return true;
+            return this.stocks.addGrains(g);
         } catch (Exception e) {
             return false;
         }
@@ -47,8 +46,8 @@ public class StockMachine {
 
     public boolean addStock(IComplement g) {
         try {
-            this.stocks.addComplements(g);
-            return true;
+            ;
+            return this.stocks.addComplements(g);
         } catch (Exception e) {
             return false;
         }
@@ -92,7 +91,7 @@ public class StockMachine {
 
     public boolean cleanStocks() throws UndoneException {
         try {
-            this.stocks.reset();
+            this.stocks.cleanUp();
             return true;
         } catch (UndoneException e) {
             throw e;
