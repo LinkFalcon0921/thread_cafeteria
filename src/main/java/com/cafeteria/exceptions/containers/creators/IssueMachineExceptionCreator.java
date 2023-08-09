@@ -1,7 +1,7 @@
 package com.cafeteria.exceptions.containers.creators;
 
 import com.cafeteria.complements.IComplement;
-import com.cafeteria.exceptions.containers.IMessages;
+import com.cafeteria.exceptions.IMessages;
 import com.cafeteria.exceptions.containers.IssueMachineException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

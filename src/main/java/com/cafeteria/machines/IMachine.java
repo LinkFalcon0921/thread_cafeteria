@@ -10,4 +10,6 @@ public interface IMachine {
     boolean fillGrainStock(List<IGrain> g);
     boolean fillComponentStock(IComplement c);
     boolean fillComponentStock(List<IComplement> c);
+
+    void restart();
 }

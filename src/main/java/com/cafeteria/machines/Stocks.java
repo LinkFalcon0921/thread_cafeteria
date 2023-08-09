@@ -2,6 +2,8 @@ package com.cafeteria.machines;
 
 import com.cafeteria.complements.EComplementType;
 import com.cafeteria.complements.IComplement;
+import com.cafeteria.exceptions.IMessages;
+import com.cafeteria.exceptions.stocks.UndoneException;
 import com.cafeteria.grains.EGrainsType;
 import com.cafeteria.grains.Grain;
 import com.cafeteria.grains.IGrain;
@@ -101,4 +103,16 @@ public class Stocks {
         this.complementStock = new HashSet<>();
     }
 
+    public void reset() throws UndoneException {
+        try{
+            if(Objects.nonNull(this.grainsStock)){
+                this.grainsStock.clear();
+            }
+            if(Objects.nonNull(this.complementStock)){
+                this.complementStock.clear();
+            }
+        }catch (Exception e){
+            throw new UndoneException(IMessages.INoDone.MACHINE_UNABLE_CLEAN);
+        }
+    }
 }

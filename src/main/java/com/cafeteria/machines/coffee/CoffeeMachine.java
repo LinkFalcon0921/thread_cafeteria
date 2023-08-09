@@ -7,6 +7,7 @@ import com.cafeteria.containers.IContainer;
 import com.cafeteria.containers.coffee.CoffeeCup;
 import com.cafeteria.containers.coffee.CoffeeGlass;
 import com.cafeteria.exceptions.containers.IssueMachineException;
+import com.cafeteria.exceptions.stocks.UndoneException;
 import com.cafeteria.grains.EGrainsType;
 import com.cafeteria.grains.IGrain;
 import com.cafeteria.grains.coffee.Coffee;
@@ -83,5 +84,10 @@ public class CoffeeMachine implements ICoffeeCupMachine, ICoffeeGlassMachine {
     @Override
     public boolean fillComponentStock(List<IComplement> cList) {
         return cList.stream().allMatch(this::fillComponentStock);
+    }
+
+    @Override
+    public void restart() throws UndoneException {
+        this.stocks.cleanStocks();
     }
 }

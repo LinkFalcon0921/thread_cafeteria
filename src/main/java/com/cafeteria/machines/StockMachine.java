@@ -5,6 +5,7 @@ import com.cafeteria.complements.IComplement;
 import com.cafeteria.containers.EContainerSize;
 import com.cafeteria.containers.EContainerType;
 import com.cafeteria.exceptions.containers.creators.IssueMachineExceptionCreator;
+import com.cafeteria.exceptions.stocks.UndoneException;
 import com.cafeteria.grains.EGrainsType;
 import com.cafeteria.grains.IGrain;
 import com.cafeteria.grains.coffee.Coffee;
@@ -88,5 +89,14 @@ public class StockMachine {
 
     public float getStockOf(EComplementType c) {
         return this.stocks.getComplement(c).orElseThrow().getAmount();
+    }
+
+    public boolean cleanStocks() throws UndoneException {
+        try {
+            this.stocks.reset();
+            return true;
+        } catch (UndoneException e) {
+            throw e;
+        }
     }
 }
