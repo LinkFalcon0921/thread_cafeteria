@@ -18,7 +18,7 @@ public class ComplementValidator {
     public void checkIngredients(final StockMachine stocks, final List<IComplement> complements) throws IssueMachineException {
 
         for (IComplement complement : complements) {
-            final float stockOf = stocks.getStockOf(complement.getType());
+            final float stockOf = stocks.getStockAmountOf(complement.getType());
 
             if (complement.getAmount() > stockOf) {
                 throw EXCEPTION_CREATOR.createNoEnoughComplementsException(complement);

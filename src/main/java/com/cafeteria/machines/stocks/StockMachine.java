@@ -8,8 +8,7 @@ import com.cafeteria.exceptions.containers.creators.IssueMachineExceptionCreator
 import com.cafeteria.exceptions.stocks.UndoneException;
 import com.cafeteria.grains.EGrainsType;
 import com.cafeteria.grains.IGrain;
-import com.cafeteria.grains.coffee.Coffee;
-import com.cafeteria.managers.validators.coffee.CoffeeGrainValidator;
+import com.cafeteria.managers.validators.coffee.GrainValidator;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,13 +16,13 @@ import java.util.Optional;
 @SuppressWarnings("unchecked")
 public class StockMachine {
     private final Stocks stocks;
-    private final CoffeeGrainValidator coffeeRuler;
+    private final GrainValidator grainValidator;
     //    private final ComplementValidator complementValidator;
     private IssueMachineExceptionCreator EXCEPTION_CREATOR;
 
     public StockMachine() {
         stocks = new Stocks();
-        this.coffeeRuler = new CoffeeGrainValidator();
+        this.grainValidator = new GrainValidator();
 //        this.complementValidator = new ComplementValidator();
         this.EXCEPTION_CREATOR = IssueMachineExceptionCreator.getCreator();
     }
@@ -46,7 +45,6 @@ public class StockMachine {
 
     public boolean addStock(IComplement g) {
         try {
-            ;
             return this.stocks.addComplements(g);
         } catch (Exception e) {
             return false;
@@ -64,13 +62,13 @@ public class StockMachine {
     public <G extends IGrain> Optional<G> getStock(EGrainsType grainsType, EContainerType containerType,
                                                    EContainerSize containerSize) {
 
-        Optional<Coffee> stocksGrain = this.stocks.getGrain(grainsType);
+        Optional<IGrain> stocksGrain = this.stocks.getGrain(grainsType);
 
-        final int requiredGrains = this.coffeeRuler
+        final int requiredGrains = this.grainValidator
                 .getRequiredGrain(containerType, containerSize)
                 .getRequiredGrains();
 
-        if (!this.coffeeRuler.isThereEnough(stocksGrain, requiredGrains)) {
+        if (!this.grainValidator.isThereEnough(stocksGrain, requiredGrains)) {
             throw EXCEPTION_CREATOR.createNoEnoughGrainsException();
         }
 
@@ -81,11 +79,11 @@ public class StockMachine {
         return (Optional<C>) this.stocks.getComplement(c).orElseThrow().withdraw(amount);
     }
 
-    public int getStockOf(EGrainsType g) {
+    public int getStockAmountOf(EGrainsType g) {
         return this.stocks.getGrain(g).orElseThrow().getAmount();
     }
 
-    public float getStockOf(EComplementType c) {
+    public float getStockAmountOf(EComplementType c) {
         return this.stocks.getComplement(c).orElseThrow().getAmount();
     }
 

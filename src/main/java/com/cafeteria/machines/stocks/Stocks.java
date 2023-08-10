@@ -6,6 +6,7 @@ import com.cafeteria.complements.IComplement;
 import com.cafeteria.exceptions.IMessages;
 import com.cafeteria.exceptions.stocks.UndoneException;
 import com.cafeteria.grains.EGrainsType;
+import com.cafeteria.grains.Grain;
 import com.cafeteria.grains.IGrain;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -64,10 +65,10 @@ public class Stocks {
         return false;
     }
 
-    public <G extends IGrain> Optional<G> getGrain(EGrainsType type) {
+    public Optional<IGrain> getGrain(EGrainsType type) {
         for (IGrain grain : this.grainsStock) {
             if (grain.isTypeOf(type)) {
-                return (Optional<G>) Optional.of(grain);
+                return Optional.of(grain);
             }
         }
 
@@ -118,16 +119,29 @@ public class Stocks {
     }
 
     public void cleanUp() throws UndoneException {
-        try {
-            if (Objects.nonNull(this.grainsStock)) {
-                this.grainsStock.clear();
-            }
+        cleanGrainsStock();
 
+        cleanComplementsStock();
+
+    }
+
+    public void cleanComplementsStock() {
+        try {
             if (Objects.nonNull(this.complementStock)) {
                 this.complementStock.clear();
             }
         } catch (Exception e) {
-            throw new UndoneException(IMessages.INoDone.MACHINE_UNABLE_CLEAN);
+            throw new UndoneException(IMessages.INoDone.getUnableToCleanMachine(IComplement.class));
+        }
+    }
+
+    private void cleanGrainsStock() {
+        try {
+            if (Objects.nonNull(this.grainsStock)) {
+                this.grainsStock.clear();
+            }
+        } catch (Exception e) {
+            throw new UndoneException(IMessages.INoDone.getUnableToCleanMachine(Grain.class));
         }
     }
 }
