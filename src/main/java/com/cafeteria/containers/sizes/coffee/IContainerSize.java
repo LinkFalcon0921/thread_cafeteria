@@ -1,6 +1,6 @@
 package com.cafeteria.containers.sizes.coffee;
 
 public interface IContainerSize {
-    int getRequiredGrains();
+    int getRequiredGrainCount();
     float getMaxContent();
 }

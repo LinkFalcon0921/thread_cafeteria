@@ -8,8 +8,8 @@ import lombok.NonNull;
 
 import java.util.Optional;
 
-public interface IGrainValidator<G extends IGrain> {
-    boolean isThereEnough(@NonNull Optional<G> g, @NonNull int amountRequired);
+public interface IGrainValidator {
+    boolean isThereEnough(@NonNull Optional<? extends IGrain> g, @NonNull int amountRequired);
 
     IContainerSize getRequiredGrain(@NonNull EContainerType containerType, @NonNull EContainerSize containerSize);
 }

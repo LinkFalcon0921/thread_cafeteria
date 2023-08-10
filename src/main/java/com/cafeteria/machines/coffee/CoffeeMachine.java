@@ -21,9 +21,11 @@ import lombok.NonNull;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 public class CoffeeMachine implements ICoffeeCupMachine, ICoffeeGlassMachine {
 
+    protected static final Function<IGrain, Coffee> FUNCTION_CASTER = Coffee.class::cast;
     private final CoffeeMixer mixer;
     private final StockMachine stocks;
 
@@ -47,7 +49,9 @@ public class CoffeeMachine implements ICoffeeCupMachine, ICoffeeGlassMachine {
                        @NonNull List<IComplement> complements) {
 
         // Get the amount of coffee required
-        Optional<Coffee> coffeeRequired = this.stocks.getStock(EGrainsType.COFFEE, containerType, containerSize);
+        Optional<Coffee> coffeeRequired = this.stocks
+                .getStock(EGrainsType.COFFEE, containerType, containerSize)
+                .map(FUNCTION_CASTER);
 
         final ECoffeeMix coffeeMixer = ECoffeeMix.getBySize(containerSize);
         final float amountCoffee = this.mixer.mixGrains(coffeeMixer, coffeeRequired);

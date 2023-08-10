@@ -10,12 +10,12 @@ public enum ECoffeeGlassSize implements IContainerSize {
     MEDIUM(16f, 20),
     BIG(20f, 24);
 
-    final float maxContent;
-    final int requiredGrains;
+    private final float maxContent;
+    private final int requiredGrainCount;
 
     ECoffeeGlassSize(float maxContent, int requiredGrains) {
         this.maxContent = maxContent;
-        this.requiredGrains = requiredGrains;
+        this.requiredGrainCount = requiredGrains;
     }
 
     public static ECoffeeGlassSize getBySize(@NonNull EContainerSize s) {

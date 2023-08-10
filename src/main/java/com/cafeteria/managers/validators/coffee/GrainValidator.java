@@ -4,7 +4,6 @@ import com.cafeteria.containers.EContainerSize;
 import com.cafeteria.containers.EContainerType;
 import com.cafeteria.containers.sizes.coffee.IContainerSize;
 import com.cafeteria.exceptions.containers.creators.IssueMachineExceptionCreator;
-import com.cafeteria.grains.Grain;
 import com.cafeteria.grains.IGrain;
 import com.cafeteria.managers.factories.CoffeeContainerGetterManager;
 import com.cafeteria.managers.validators.IGrainValidator;
@@ -12,7 +11,7 @@ import lombok.NonNull;
 
 import java.util.Optional;
 
-public class GrainValidator implements IGrainValidator<IGrain> {
+public class GrainValidator implements IGrainValidator {
 
     private final IssueMachineExceptionCreator EXCEPTION_CREATOR;
     private final CoffeeContainerGetterManager coffeeContainerManager;
@@ -23,8 +22,8 @@ public class GrainValidator implements IGrainValidator<IGrain> {
     }
 
     @Override
-    public boolean isThereEnough(@NonNull Optional<IGrain> coffee, @NonNull int amountRequired) {
-        return coffee.filter(iGrain -> iGrain.getAmount() >= amountRequired).isPresent();
+    public boolean isThereEnough(@NonNull Optional<? extends IGrain> grain, @NonNull int amountRequired) {
+        return grain.filter(iGrain -> iGrain.getAmount() >= amountRequired).isPresent();
     }
 
     public IContainerSize getRequiredGrain(@NonNull EContainerType containerType, @NonNull EContainerSize containerSize) {
