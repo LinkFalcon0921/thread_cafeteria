@@ -1,5 +1,8 @@
 package com.cafeteria.managers.validators.coffee;
 
+import com.cafeteria.containers.EContainerSize;
+import com.cafeteria.containers.EContainerType;
+import com.cafeteria.containers.sizes.coffee.IContainerSize;
 import com.cafeteria.grains.IGrain;
 import com.cafeteria.grains.coffee.Coffee;
 import org.junit.jupiter.api.BeforeAll;
@@ -14,7 +17,11 @@ import static org.junit.jupiter.api.Assumptions.*;
 
 class GrainValidatorTest {
 
+    protected static final EContainerSize MEDIUM_SIZE_CONTAINER = EContainerSize.MEDIUM;
+    protected static final EContainerType CUP_CONTAINER = EContainerType.CUP;
     private interface IMessages {
+
+        String REQUIRED_INGREDIENTS_WERE_NOT_FOUND_MESSAGE = "The container required ingredients were not found";
 
         String THE_VALIDATOR_IS_NULL_MESSAGE = "The validator is null";
         String THERE_IS_NOT_ENOUGH_GRAIN_IN_THE_STOCK = "There is not enough grain in the stock.";
@@ -58,6 +65,16 @@ class GrainValidatorTest {
 
         assertFalse(validator.isThereEnough(grainOptional, expectedAmount),
                 IMessages.THERE_IS_NOT_ENOUGH_GRAIN_IN_THE_STOCK);
+    }
+
+    @Test
+    void checkGetRequiredIngredientsNotNull() {
+        checkValidatorNotNull();
+
+        IContainerSize requiredGrain = validator
+                .getRequiredGrain(CUP_CONTAINER, MEDIUM_SIZE_CONTAINER);
+
+        assertNotNull(requiredGrain, IMessages.REQUIRED_INGREDIENTS_WERE_NOT_FOUND_MESSAGE);
     }
 
     private static void checkValidatorNotNull() {
