@@ -12,30 +12,4 @@ public class Coffee extends Grain {
         super(EGrainsType.COFFEE, amount);
     }
 
-    @Override
-    public boolean fill(@NonNull IGrain grain) {
-        if(!grain.isTypeOf(getType())){
-            return false;
-        }
-
-        final int coffeeAmount = grain.getAmount();
-
-        if(coffeeAmount < 0){
-            return false;
-        }
-
-        this.amount += coffeeAmount;
-        return true;
-    }
-
-    @Override
-    public Optional<IGrain> withdraw(Integer amount) {
-        if(amount <= 0){
-            return Optional.empty();
-        }
-
-        this.amount -= amount;
-
-        return Optional.of(new Coffee(amount));
-    }
 }
