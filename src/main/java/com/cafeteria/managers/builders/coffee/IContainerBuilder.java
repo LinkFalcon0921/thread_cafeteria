@@ -2,13 +2,14 @@ package com.cafeteria.managers.builders.coffee;
 
 import com.cafeteria.containers.EContainerSize;
 import com.cafeteria.containers.IContainer;
+import com.cafeteria.containers.IContainerSize;
 
-public interface IContainerBuilder<C extends IContainer<ES>, ES extends Enum<ES>> {
+public interface IContainerBuilder<C extends IContainer<CSIZE>, CSIZE extends IContainerSize> {
 
-    IContainerBuilder<C,ES> setSize(EContainerSize size);
+    IContainerBuilder<C, CSIZE> setSize(EContainerSize size);
 
-    IContainerBuilder<C,ES> setActualAmount(float actualAmount);
+    IContainerBuilder<C, CSIZE> setActualAmount(float actualAmount);
 
-    IContainerBuilder<C,ES> setMaxAmount(float maxAmount);
+    IContainerBuilder<C, CSIZE> setMaxAmount(float maxAmount);
     C prepare();
 }

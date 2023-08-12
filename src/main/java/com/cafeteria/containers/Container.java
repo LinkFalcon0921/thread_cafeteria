@@ -14,7 +14,7 @@ import java.util.Set;
 @Getter
 @Setter
 @EqualsAndHashCode
-public abstract class Container<ES extends Enum<ES>> implements IContainer<ES> {
+public abstract class Container<ES extends IContainerSize> implements IContainer<ES> {
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     protected final EContainerSize SIZE;
