@@ -4,7 +4,7 @@ import com.cafeteria.complements.EComplementType;
 import com.cafeteria.complements.IComplement;
 import com.cafeteria.containers.EContainerSize;
 import com.cafeteria.containers.EContainerType;
-import com.cafeteria.containers.sizes.coffee.IContainerSize;
+import com.cafeteria.containers.IContainerSize;
 import com.cafeteria.exceptions.containers.creators.IssueMachineExceptionCreator;
 import com.cafeteria.exceptions.stocks.UndoneException;
 import com.cafeteria.grains.EGrainsType;

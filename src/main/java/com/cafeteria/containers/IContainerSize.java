@@ -1,4 +1,4 @@
-package com.cafeteria.containers.sizes.coffee;
+package com.cafeteria.containers;
 
 public interface IContainerSize {
     int getRequiredGrainCount();

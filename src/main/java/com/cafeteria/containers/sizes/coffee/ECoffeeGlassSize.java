@@ -1,6 +1,7 @@
 package com.cafeteria.containers.sizes.coffee;
 
 import com.cafeteria.containers.EContainerSize;
+import com.cafeteria.containers.IContainerSize;
 import lombok.Getter;
 import lombok.NonNull;
 

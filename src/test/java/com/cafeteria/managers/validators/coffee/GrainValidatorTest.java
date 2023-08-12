@@ -2,7 +2,7 @@ package com.cafeteria.managers.validators.coffee;
 
 import com.cafeteria.containers.EContainerSize;
 import com.cafeteria.containers.EContainerType;
-import com.cafeteria.containers.sizes.coffee.IContainerSize;
+import com.cafeteria.containers.IContainerSize;
 import com.cafeteria.grains.IGrain;
 import com.cafeteria.grains.coffee.Coffee;
 import org.junit.jupiter.api.BeforeAll;

@@ -2,7 +2,7 @@ package com.cafeteria.managers.factories;
 
 import com.cafeteria.containers.EContainerSize;
 import com.cafeteria.containers.EContainerType;
-import com.cafeteria.containers.sizes.coffee.IContainerSize;
+import com.cafeteria.containers.IContainerSize;
 import com.cafeteria.managers.factories.grains.IGrainContainerGetterManager;
 import org.jetbrains.annotations.NotNull;
 
