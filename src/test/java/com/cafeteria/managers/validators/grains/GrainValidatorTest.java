@@ -1,10 +1,11 @@
-package com.cafeteria.managers.validators.coffee;
+package com.cafeteria.managers.validators.grains;
 
 import com.cafeteria.containers.EContainerSize;
 import com.cafeteria.containers.EContainerType;
 import com.cafeteria.containers.IContainerSize;
 import com.cafeteria.grains.IGrain;
 import com.cafeteria.grains.coffee.Coffee;
+import com.cafeteria.managers.factories.getters.containers.coffee.CoffeeContainerGetterManager;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -19,6 +20,8 @@ class GrainValidatorTest {
 
     protected static final EContainerSize MEDIUM_SIZE_CONTAINER = EContainerSize.MEDIUM;
     protected static final EContainerType CUP_CONTAINER = EContainerType.CUP;
+    private CoffeeContainerGetterManager containerGetterManager;
+
     private interface IMessages {
 
         String REQUIRED_INGREDIENTS_WERE_NOT_FOUND_MESSAGE = "The container required ingredients were not found";
@@ -49,7 +52,7 @@ class GrainValidatorTest {
 
         final int expectedAmount = randomizer.nextInt(maxAmount);
 
-        assertTrue(validator.isThereEnough(grainOptional, expectedAmount));
+        assertTrue(validator.hasEnough(grainOptional, expectedAmount));
     }
 
     @Test
@@ -63,18 +66,8 @@ class GrainValidatorTest {
 
         final int expectedAmount = randomizer.nextInt(3);
 
-        assertFalse(validator.isThereEnough(grainOptional, expectedAmount),
+        assertFalse(validator.hasEnough(grainOptional, expectedAmount),
                 IMessages.THERE_IS_NOT_ENOUGH_GRAIN_IN_THE_STOCK);
-    }
-
-    @Test
-    void checkGetRequiredIngredientsNotNull() {
-        checkValidatorNotNull();
-
-        IContainerSize requiredGrain = validator
-                .getRequiredGrain(CUP_CONTAINER, MEDIUM_SIZE_CONTAINER);
-
-        assertNotNull(requiredGrain, IMessages.REQUIRED_INGREDIENTS_WERE_NOT_FOUND_MESSAGE);
     }
 
     private static void checkValidatorNotNull() {

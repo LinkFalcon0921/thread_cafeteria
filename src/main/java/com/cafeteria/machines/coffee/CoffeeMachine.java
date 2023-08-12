@@ -13,6 +13,7 @@ import com.cafeteria.grains.coffee.Coffee;
 import com.cafeteria.machines.Machine;
 import com.cafeteria.managers.builders.coffee.CoffeeCupContainerBuilder;
 import com.cafeteria.managers.builders.coffee.CoffeeGlassContainerBuilder;
+import com.cafeteria.managers.factories.getters.containers.coffee.CoffeeContainerGetterManager;
 import com.cafeteria.managers.factories.getters.mixers.coffee.CoffeeMixerGetter;
 import com.cafeteria.managers.mixes.coffee.CoffeeMixer;
 import com.cafeteria.managers.mixes.coffee.ECoffeeMix;
@@ -23,16 +24,16 @@ import java.util.function.Function;
 
 public class CoffeeMachine
         extends Machine
-        <CoffeeMixer,
+                <CoffeeMixer,
                 ECoffeeMix,
                 Coffee>
         implements ICoffeeCupMachine, ICoffeeGlassMachine {
 
     public CoffeeMachine() {
-        super(EGrainsType.COFFEE, new CoffeeMixerGetter(), new CoffeeMixer());
+        super(EGrainsType.COFFEE, new CoffeeMixerGetter(),
+                new CoffeeMixer(), new CoffeeContainerGetterManager());
     }
 
-    // TODO: 8/12/2023  
     @Override
     public CoffeeCup prepareCup(EContainerSize size, List<IComplement> complements) throws IssueMachineException {
         return prepareContainer(CoffeeCupContainerBuilder.builder(), EContainerType.CUP, size, complements);

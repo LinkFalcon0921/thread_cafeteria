@@ -1,15 +1,13 @@
 package com.cafeteria.machines.stocks;
 
-import com.cafeteria.complements.EComplementType;
 import com.cafeteria.complements.IComplement;
-import com.cafeteria.containers.EContainerSize;
-import com.cafeteria.containers.EContainerType;
 import com.cafeteria.containers.IContainerSize;
 import com.cafeteria.exceptions.containers.creators.IssueMachineExceptionCreator;
 import com.cafeteria.exceptions.stocks.UndoneException;
 import com.cafeteria.grains.EGrainsType;
 import com.cafeteria.grains.IGrain;
-import com.cafeteria.managers.validators.coffee.GrainValidator;
+import com.cafeteria.managers.validators.grains.GrainValidator;
+import lombok.NonNull;
 
 import java.util.List;
 import java.util.Optional;
@@ -59,34 +57,19 @@ public class StockMachine {
         }
     }
 
-    public Optional<IGrain> getStock(EGrainsType grainsType, EContainerType containerType,
-                                     EContainerSize containerSize) {
+    @NonNull
+    public Optional<IGrain> getStock(@NonNull EGrainsType grainsType, @NonNull IContainerSize containerDetails) {
 
         Optional<IGrain> stocksGrain = this.stocks.getGrain(grainsType);
 
-        IContainerSize grainContainer = this.grainValidator
-                .getRequiredGrain(containerType, containerSize);
-
-        final int requiredGrains = grainContainer
+        final int requiredGrains = containerDetails
                 .getRequiredGrainCount();
 
-        if (!this.grainValidator.isThereEnough(stocksGrain, requiredGrains)) {
+        if (!this.grainValidator.hasEnough(stocksGrain, requiredGrains)) {
             throw EXCEPTION_CREATOR.createNoEnoughGrainsException();
         }
 
         return stocksGrain.orElseThrow().withdraw(requiredGrains);
-    }
-
-    public Optional<IComplement> getStock(EComplementType c, float amount) {
-        return this.stocks.getComplement(c).orElseThrow().withdraw(amount);
-    }
-
-    public int getStockAmountOf(EGrainsType g) {
-        return this.stocks.getGrain(g).orElseThrow().getAmount();
-    }
-
-    public float getStockAmountOf(EComplementType c) {
-        return this.stocks.getComplement(c).orElseThrow().getAmount();
     }
 
     public boolean cleanStocks() throws UndoneException {

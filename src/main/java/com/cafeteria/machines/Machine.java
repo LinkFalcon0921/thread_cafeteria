@@ -5,12 +5,13 @@ import com.cafeteria.containers.EContainerSize;
 import com.cafeteria.containers.EContainerType;
 import com.cafeteria.containers.IContainer;
 import com.cafeteria.containers.IContainerSize;
+import com.cafeteria.exceptions.containers.IssueMachineException;
 import com.cafeteria.exceptions.stocks.UndoneException;
 import com.cafeteria.grains.EGrainsType;
 import com.cafeteria.grains.IGrain;
 import com.cafeteria.machines.stocks.StockMachine;
 import com.cafeteria.managers.builders.coffee.IContainerBuilder;
-import com.cafeteria.managers.factories.getters.containers.coffee.CoffeeContainerGetterManager;
+import com.cafeteria.managers.factories.getters.containers.IGrainContainerGetterManager;
 import com.cafeteria.managers.factories.getters.mixers.IMixerGetter;
 import com.cafeteria.managers.mixes.IGrainMixDetails;
 import com.cafeteria.managers.mixes.coffee.IMixer;
@@ -36,37 +37,39 @@ public abstract class Machine
     protected final StockMachine stocks;
     private final MIXER mixer;
     private final IMixerGetter<E_MIX> mixerGetter;
-
-    protected CoffeeContainerGetterManager containerGetterFactory;
+    protected final IGrainContainerGetterManager containerGetterFactory;
     private final EGrainsType grainsType;
 
-    public Machine(EGrainsType grainsType, IMixerGetter<E_MIX> mixerGetter, MIXER mixer) {
+    public Machine(EGrainsType grainsType, IMixerGetter<E_MIX> mixerGetter, MIXER mixer,
+                   IGrainContainerGetterManager containerGetterFactory) {
         this.mixer = mixer;
         this.mixerGetter = mixerGetter;
         this.grainsType = grainsType;
+        this.containerGetterFactory = containerGetterFactory;
         this.stocks = new StockMachine();
     }
 
     public <C_SIZE extends IContainerSize, BC extends IContainerBuilder<C, C_SIZE>, C extends IContainer<C_SIZE>>
     C prepareContainer(@NonNull BC builder, EContainerType containerType,
                        EContainerSize containerSize,
-                       @NonNull List<IComplement> complements) {
+                       @NonNull List<IComplement> complements) throws IssueMachineException, UndoneException {
+
+        IContainerSize containerDetails = this.containerGetterFactory
+                .getGrainContainerDetails(containerType, containerSize);
 
         // Get the number of grains required
         Optional<G> grainRequired = this.stocks
-                .getStock(this.grainsType, containerType, containerSize)
+                .getStock(this.grainsType, containerDetails)
                 .map(getMapper());
-
-        IContainerSize grainContainerDetails = this.containerGetterFactory
-                .getGrainContainerDetails(containerType, containerSize);
 
         E_MIX requiredMixValues = this.mixerGetter.getMixerOf(containerSize);
 
         final float grainAmount = this.mixer.mixGrains(requiredMixValues, grainRequired);
 
         // Create the container
-        var container = builder.setSize(containerSize)
-                .setMaxAmount(grainContainerDetails.getMaxContent())
+        var container = builder
+                .setSize(containerSize)
+                .setMaxAmount(containerDetails.getMaxContent())
                 .setActualAmount(grainAmount)
                 .prepare();
 

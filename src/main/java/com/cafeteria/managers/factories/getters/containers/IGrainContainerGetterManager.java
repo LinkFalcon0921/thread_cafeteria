@@ -6,5 +6,6 @@ import com.cafeteria.containers.IContainerSize;
 import org.jetbrains.annotations.NotNull;
 
 public interface IGrainContainerGetterManager {
-    IContainerSize getGrainContainerDetails(@NotNull EContainerType containerType, @NotNull EContainerSize containerSize);
+    IContainerSize getGrainContainerDetails(@NotNull EContainerType containerType,
+                                            @NotNull EContainerSize containerSize);
 }

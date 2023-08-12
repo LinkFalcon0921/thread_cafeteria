@@ -4,12 +4,11 @@ import com.cafeteria.containers.EContainerSize;
 import com.cafeteria.containers.EContainerType;
 import com.cafeteria.containers.IContainerSize;
 import com.cafeteria.grains.IGrain;
+import com.cafeteria.managers.factories.getters.containers.IGrainContainerGetterManager;
 import lombok.NonNull;
 
 import java.util.Optional;
 
 public interface IGrainValidator {
-    boolean isThereEnough(@NonNull Optional<? extends IGrain> g, @NonNull int amountRequired);
-
-    IContainerSize getRequiredGrain(@NonNull EContainerType containerType, @NonNull EContainerSize containerSize);
+    boolean hasEnough(@NonNull Optional<? extends IGrain> g, @NonNull int amountRequired);
 }

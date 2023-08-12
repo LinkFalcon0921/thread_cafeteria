@@ -15,7 +15,8 @@ import java.util.function.Function;
 
 public class TeaMachine extends Machine implements ITeaCupMachine {
     public TeaMachine() {
-        super(EGrainsType.TEA, null, mixerGetter);
+        // TODO: 8/12/2023  replace each null
+        super(EGrainsType.TEA, null, null, null);
     }
 
     @Override
