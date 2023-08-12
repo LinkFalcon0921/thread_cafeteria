@@ -1,9 +1,9 @@
-package com.cafeteria.managers.factories;
+package com.cafeteria.managers.factories.getters.containers.coffee;
 
 import com.cafeteria.containers.EContainerSize;
 import com.cafeteria.containers.EContainerType;
 import com.cafeteria.containers.IContainerSize;
-import com.cafeteria.managers.factories.grains.IGrainContainerGetterManager;
+import com.cafeteria.managers.factories.getters.containers.IGrainContainerGetterManager;
 import org.jetbrains.annotations.NotNull;
 
 public class CoffeeContainerGetterManager implements IGrainContainerGetterManager {

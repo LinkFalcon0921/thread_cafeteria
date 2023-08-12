@@ -5,7 +5,7 @@ import com.cafeteria.containers.EContainerType;
 import com.cafeteria.containers.IContainerSize;
 import com.cafeteria.exceptions.containers.creators.IssueMachineExceptionCreator;
 import com.cafeteria.grains.IGrain;
-import com.cafeteria.managers.factories.CoffeeContainerGetterManager;
+import com.cafeteria.managers.factories.getters.containers.coffee.CoffeeContainerGetterManager;
 import com.cafeteria.managers.validators.IGrainValidator;
 import lombok.NonNull;
 

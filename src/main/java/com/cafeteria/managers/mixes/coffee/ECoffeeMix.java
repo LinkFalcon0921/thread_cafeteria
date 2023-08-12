@@ -1,32 +1,25 @@
 package com.cafeteria.managers.mixes.coffee;
 
 import com.cafeteria.containers.EContainerSize;
+import com.cafeteria.managers.mixes.IGrainMixDetails;
+import lombok.Getter;
+import lombok.NonNull;
 
-import java.util.function.Function;
-
-public enum ECoffeeMix implements Function<EContainerSize, ECoffeeMix> {
+@Getter
+public enum ECoffeeMix implements IGrainMixDetails {
     SMALL(1.3f),
     MEDIUM(1.9f),
     BIG(2.2f);
 
-    final float MIX_VAL;
+    final float mixVal;
 
     ECoffeeMix(float value) {
-        this.MIX_VAL = value;
+        this.mixVal = value;
     }
 
-    public static ECoffeeMix getBySize(EContainerSize size) throws IllegalArgumentException{
+    @NonNull
+    public static ECoffeeMix getBySize(EContainerSize size) throws IllegalArgumentException {
         return ECoffeeMix.valueOf(size.name());
     }
 
-    /**
-     * Applies this function to the given argument.
-     *
-     * @param containerSize the function argument
-     * @return the function result
-     */
-    @Override
-    public ECoffeeMix apply(EContainerSize containerSize) {
-        return getBySize(containerSize);
-    }
 }

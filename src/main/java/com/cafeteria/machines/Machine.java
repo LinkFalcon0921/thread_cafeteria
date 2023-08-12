@@ -10,54 +10,63 @@ import com.cafeteria.grains.EGrainsType;
 import com.cafeteria.grains.IGrain;
 import com.cafeteria.machines.stocks.StockMachine;
 import com.cafeteria.managers.builders.coffee.IContainerBuilder;
-import com.cafeteria.managers.factories.IContainerGetter;
+import com.cafeteria.managers.factories.getters.containers.coffee.CoffeeContainerGetterManager;
+import com.cafeteria.managers.factories.getters.mixers.IMixerGetter;
+import com.cafeteria.managers.mixes.IGrainMixDetails;
 import com.cafeteria.managers.mixes.coffee.IMixer;
 import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
-/**Generics Param<br/>
+
+/**
+ * Generics Param<br/>
  * * Enum container size<br/>
  * * Mixer class<br/>
  * * Enum grain mixer<br/>
- * * Grain class*/
+ * * Grain class
+ */
 public abstract class Machine
-        <EC_SIZE extends IContainerSize,
-                MIXER extends IMixer<E_MIX, G>,
-                E_MIX extends Enum<E_MIX>,
+        <MIXER extends IMixer<E_MIX, G>,
+                E_MIX extends IGrainMixDetails,
                 G extends IGrain>
         implements IMachine {
     protected final StockMachine stocks;
     private final MIXER mixer;
-    protected final Map<EContainerType, IContainerGetter<EC_SIZE>> containerGetterFactory;
+    private final IMixerGetter<E_MIX> mixerGetter;
+
+    protected CoffeeContainerGetterManager containerGetterFactory;
     private final EGrainsType grainsType;
 
-    public Machine(EGrainsType grainsType, MIXER mixer, Map<EContainerType,
-            IContainerGetter<EC_SIZE>> containerGetterFactory) {
+    public Machine(EGrainsType grainsType, IMixerGetter<E_MIX> mixerGetter, MIXER mixer) {
         this.mixer = mixer;
-        this.containerGetterFactory = containerGetterFactory;
+        this.mixerGetter = mixerGetter;
         this.grainsType = grainsType;
-        stocks = new StockMachine();
+        this.stocks = new StockMachine();
     }
 
-    public <BC extends IContainerBuilder<C, EC_SIZE>, C extends IContainer<EC_SIZE>>
+    public <C_SIZE extends IContainerSize, BC extends IContainerBuilder<C, C_SIZE>, C extends IContainer<C_SIZE>>
     C prepareContainer(@NonNull BC builder, EContainerType containerType,
                        EContainerSize containerSize,
-                       E_MIX requiredMixValues, @NonNull List<IComplement> complements) {
+                       @NonNull List<IComplement> complements) {
 
         // Get the number of grains required
         Optional<G> grainRequired = this.stocks
-                .getStock(grainsType, containerType, containerSize)
+                .getStock(this.grainsType, containerType, containerSize)
                 .map(getMapper());
+
+        IContainerSize grainContainerDetails = this.containerGetterFactory
+                .getGrainContainerDetails(containerType, containerSize);
+
+        E_MIX requiredMixValues = this.mixerGetter.getMixerOf(containerSize);
 
         final float grainAmount = this.mixer.mixGrains(requiredMixValues, grainRequired);
 
         // Create the container
         var container = builder.setSize(containerSize)
-                .setMaxAmount(grainAmount)
+                .setMaxAmount(grainContainerDetails.getMaxContent())
                 .setActualAmount(grainAmount)
                 .prepare();
 

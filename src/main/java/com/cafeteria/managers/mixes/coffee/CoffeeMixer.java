@@ -21,6 +21,6 @@ public class CoffeeMixer implements IMixer<ECoffeeMix, Coffee> {
             throw EXCEPTION_CREATOR.createNoEnoughGrainsException();
         }
 
-        return g.get().getAmount() * e.MIX_VAL;
+        return g.get().getAmount() * e.mixVal;
     }
 }
