@@ -40,52 +40,55 @@ class CoffeeMachineTest {
         coffeeMachine.fillComponentStock(sugarByDefault);
     }
 
-    @Test
-    void createSmallCoffeeCupWithSugar() {
+    @Nested
+    class CupPreparation {
+        @Test
+        void createSmallCoffeeCupWithSugar() {
 
-        Sugar sugar = new Sugar(EPortion.tbsp, sugarAmount);
+            Sugar sugar = new Sugar(EPortion.tbsp, sugarAmount);
 
-        List<IComplement> complementPortions = List.of(sugar);
+            List<IComplement> complementPortions = List.of(sugar);
 
-        CoffeeCup cup = coffeeMachine.prepareCup(EContainerSize.SMALL,
-                complementPortions);
+            CoffeeCup cup = coffeeMachine.prepareCup(EContainerSize.SMALL,
+                    complementPortions);
 
-        assertNotNull(cup.getGrains());
-        assertNotNull(cup.getComplements());
+            assertNotNull(cup.getGrains());
+            assertNotNull(cup.getComplements());
 
-        System.out.println(cup.getSize());
-    }
+            System.out.println(cup.getSize());
+        }
 
-    @Test
-    void createMediumCoffeeCupWithSugar() {
+        @Test
+        void createMediumCoffeeCupWithSugar() {
 
-        Sugar sugar = new Sugar(EPortion.tbsp, sugarAmount);
+            Sugar sugar = new Sugar(EPortion.tbsp, sugarAmount);
 
-        List<IComplement> complementPortions = List.of(sugar);
+            List<IComplement> complementPortions = List.of(sugar);
 
-        CoffeeCup cup = coffeeMachine.prepareCup(EContainerSize.MEDIUM,
-                complementPortions);
+            CoffeeCup cup = coffeeMachine.prepareCup(EContainerSize.MEDIUM,
+                    complementPortions);
 
-        assertNotNull(cup.getGrains());
-        assertNotNull(cup.getComplements());
+            assertNotNull(cup.getGrains());
+            assertNotNull(cup.getComplements());
 
-        System.out.println(cup.getSize());
-    }
+            System.out.println(cup.getSize());
+        }
 
-    @Test
-    void createBigCoffeeCupWithSugar() {
+        @Test
+        void createBigCoffeeCupWithSugar() {
 
-        Sugar sugar = new Sugar(EPortion.tbsp, sugarAmount);
+            Sugar sugar = new Sugar(EPortion.tbsp, sugarAmount);
 
-        List<IComplement> complementPortions = List.of(sugar);
+            List<IComplement> complementPortions = List.of(sugar);
 
-        CoffeeCup cup = coffeeMachine.prepareCup(EContainerSize.BIG,
-                complementPortions);
+            CoffeeCup cup = coffeeMachine.prepareCup(EContainerSize.BIG,
+                    complementPortions);
 
-        assertNotNull(cup.getGrains());
-        assertNotNull(cup.getComplements());
+            assertNotNull(cup.getGrains());
+            assertNotNull(cup.getComplements());
 
-        System.out.println(cup.getSize());
+            System.out.println(cup.getSize());
+        }
     }
 
     @Nested

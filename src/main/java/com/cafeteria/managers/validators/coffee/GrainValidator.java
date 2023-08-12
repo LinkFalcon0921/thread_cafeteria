@@ -22,7 +22,7 @@ public class GrainValidator implements IGrainValidator {
     }
 
     @Override
-    public boolean isThereEnough(@NonNull Optional<? extends IGrain> grain, @NonNull int amountRequired) {
+    public boolean isThereEnough(@NonNull Optional<? extends IGrain> grain, int amountRequired) {
         return grain.filter(iGrain -> iGrain.getAmount() >= amountRequired).isPresent();
     }
 
