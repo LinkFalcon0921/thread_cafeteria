@@ -7,9 +7,9 @@ import lombok.NonNull;
 
 @Getter
 public enum ETeaCupSize implements IContainerSize {
-    SMALL(7f, 5),
-    MEDIUM(12f, 10),
-    BIG(16f, 16);
+    SMALL(7f, 15),
+    MEDIUM(12f, 26),
+    BIG(16f, 35);
 
     private final float maxContent;
     private final int requiredGrainCount;
