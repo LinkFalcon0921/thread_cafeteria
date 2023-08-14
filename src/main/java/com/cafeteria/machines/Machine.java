@@ -12,7 +12,7 @@ import com.cafeteria.exceptions.stocks.UndoneException;
 import com.cafeteria.grains.EGrainsType;
 import com.cafeteria.grains.IGrain;
 import com.cafeteria.machines.stocks.StockMachine;
-import com.cafeteria.managers.builders.coffee.IContainerBuilder;
+import com.cafeteria.managers.builders.IContainerBuilder;
 import com.cafeteria.managers.factories.getters.containers.IGrainContainerGetterManager;
 import com.cafeteria.managers.factories.getters.mixers.IMixerGetter;
 import com.cafeteria.managers.mixes.IGrainMixDetails;

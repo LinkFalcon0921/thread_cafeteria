@@ -1,4 +1,4 @@
-package com.cafeteria.managers.builders.coffee;
+package com.cafeteria.managers.builders;
 
 import com.cafeteria.containers.EContainerSize;
 import com.cafeteria.containers.IContainer;
