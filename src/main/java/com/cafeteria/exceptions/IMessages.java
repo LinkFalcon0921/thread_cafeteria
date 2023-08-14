@@ -3,14 +3,19 @@ package com.cafeteria.exceptions;
 public interface IMessages {
     interface Issues {
 
-        String NOT_ENOUGH_GRAINS = "The amount of grains is not enough to make the expected drink.";
         /**
          * Has parameters.
          *
-         * @apiNote Parameterized string name the name of the complement
+         * @apiNote Parameterized string name the name of the complement.
          */
-        String NOT_ENOUGH_COMPLEMENT = "The amount of grains is not enough to make the expected drink.";
+        String ANY_STOCK_OF = "The machine does not contain stock of %s.";
 
+        /**
+         * Has parameters.
+         *
+         * @apiNote Parameterized string name the name of the complement.
+         */
+        String NOT_ENOUGH_STOCK = "The amount of %s is not enough to make the expected drink.";
     }
 
     interface INoDone {

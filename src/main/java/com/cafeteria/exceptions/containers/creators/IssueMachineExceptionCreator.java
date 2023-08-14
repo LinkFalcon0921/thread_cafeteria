@@ -1,9 +1,8 @@
 package com.cafeteria.exceptions.containers.creators;
 
-import com.cafeteria.complements.EComplementType;
-import com.cafeteria.complements.IComplement;
 import com.cafeteria.exceptions.IMessages;
 import com.cafeteria.exceptions.containers.IssueMachineException;
+import com.cafeteria.fields.IClassifiableStock;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -22,12 +21,13 @@ public class IssueMachineExceptionCreator {
         return creator;
     }
 
-    public IssueMachineException createNoEnoughGrainsException() {
-        return new IssueMachineException(IMessages.Issues.NOT_ENOUGH_GRAINS);
+    public IssueMachineException createNoEnoughStockException(IClassifiableStock complement) {
+        return new IssueMachineException(IMessages.Issues.NOT_ENOUGH_STOCK,
+                complement);
     }
 
-    public IssueMachineException createNoEnoughComplementsException(EComplementType complement) {
-        return new IssueMachineException(IMessages.Issues.NOT_ENOUGH_COMPLEMENT,
-                complement);
+    public IssueMachineException createNoStockOfException(IClassifiableStock stockType) {
+        return new IssueMachineException(IMessages.Issues.ANY_STOCK_OF,
+                stockType);
     }
 }

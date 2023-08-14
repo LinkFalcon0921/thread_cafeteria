@@ -120,9 +120,7 @@ public class Stocks {
 
     public void cleanUp() throws UndoneException {
         cleanGrainsStock();
-
         cleanComplementsStock();
-
     }
 
     public void cleanComplementsStock() {

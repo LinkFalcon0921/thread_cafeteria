@@ -1,11 +1,13 @@
 package com.cafeteria.machines;
 
+import com.cafeteria.complements.EComplementType;
 import com.cafeteria.complements.IComplement;
 import com.cafeteria.containers.EContainerSize;
 import com.cafeteria.containers.EContainerType;
 import com.cafeteria.containers.IContainer;
 import com.cafeteria.containers.IContainerSize;
 import com.cafeteria.exceptions.containers.IssueMachineException;
+import com.cafeteria.exceptions.containers.creators.IssueMachineExceptionCreator;
 import com.cafeteria.exceptions.stocks.UndoneException;
 import com.cafeteria.grains.EGrainsType;
 import com.cafeteria.grains.IGrain;
@@ -19,6 +21,7 @@ import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -35,24 +38,29 @@ public abstract class Machine
                 G extends IGrain>
         implements IMachine {
     protected final StockMachine stocks;
-    private final MIXER mixer;
-    private final IMixerGetter<E_MIX> mixerGetter;
+    protected final MIXER mixer;
+    protected final IMixerGetter<E_MIX> mixerGetter;
     protected final IGrainContainerGetterManager containerGetterFactory;
-    private final EGrainsType grainsType;
+    protected final EGrainsType grainsType;
+    protected static IssueMachineExceptionCreator EXCEPTION_CREATOR;
 
     public Machine(EGrainsType grainsType, IMixerGetter<E_MIX> mixerGetter, MIXER mixer,
                    IGrainContainerGetterManager containerGetterFactory) {
+        EXCEPTION_CREATOR = IssueMachineExceptionCreator.getCreator();
+
         this.mixer = mixer;
         this.mixerGetter = mixerGetter;
         this.grainsType = grainsType;
         this.containerGetterFactory = containerGetterFactory;
+
         this.stocks = new StockMachine();
     }
 
     public <C_SIZE extends IContainerSize, BC extends IContainerBuilder<C, C_SIZE>, C extends IContainer<C_SIZE>>
-    C prepareContainer(@NonNull BC builder, EContainerType containerType,
-                       EContainerSize containerSize,
-                       @NonNull List<IComplement> complements) throws IssueMachineException, UndoneException {
+    C prepareContainer(@NonNull BC builder, @NonNull EContainerType containerType,
+                       @NonNull EContainerSize containerSize,
+                       @NonNull List<IComplement> complements)
+            throws IssueMachineException, UndoneException {
 
         IContainerSize containerDetails = this.containerGetterFactory
                 .getGrainContainerDetails(containerType, containerSize);
@@ -77,9 +85,28 @@ public abstract class Machine
         container.setGrains(grainRequired.orElseThrow());
 
         //Add Complements
-        complements.forEach(container::addComplement);
+        addComplements(container, complements);
 
         return container;
+    }
+
+    protected <C_SIZE extends IContainerSize, C extends IContainer<C_SIZE>>
+    void addComplements(C container, List<IComplement> complements)
+            throws IssueMachineException {
+
+        if (Objects.isNull(complements) || complements.isEmpty()) {
+            return;
+        }
+
+        for (IComplement complement : complements) {
+            final EComplementType type = complement.getType();
+
+            if (!this.stocks.hasStockOf(type)) {
+                throw EXCEPTION_CREATOR.createNoStockOfException(type);
+            }
+
+            container.addComplement(complement);
+        }
     }
 
     @Override

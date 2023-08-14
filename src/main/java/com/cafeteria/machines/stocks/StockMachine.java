@@ -6,6 +6,7 @@ import com.cafeteria.containers.IContainerSize;
 import com.cafeteria.exceptions.containers.IssueMachineException;
 import com.cafeteria.exceptions.containers.creators.IssueMachineExceptionCreator;
 import com.cafeteria.exceptions.stocks.UndoneException;
+import com.cafeteria.fields.IClassifiableStock;
 import com.cafeteria.grains.EGrainsType;
 import com.cafeteria.grains.IGrain;
 import com.cafeteria.managers.validators.complements.ComplementValidator;
@@ -15,9 +16,10 @@ import com.cafeteria.managers.validators.grains.IGrainValidator;
 import lombok.NonNull;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
-public class StockMachine {
+public class StockMachine implements IComplementStockMachine, IGrainStockMachine {
     private final Stocks stocks;
     private final IGrainValidator grainValidator;
     private final IComplementValidator complementValidator;
@@ -32,6 +34,10 @@ public class StockMachine {
 
     public boolean addStock(IGrain g) {
         try {
+            if (Objects.isNull(g)) {
+                throw new RuntimeException();
+            }
+
             return this.stocks.addGrains(g);
         } catch (Exception e) {
             return false;
@@ -62,9 +68,16 @@ public class StockMachine {
         }
     }
 
+    /**
+     * Retrieve an {@link EGrainsType} stock.
+     */
     @NonNull
     public Optional<IGrain> getStock(@NonNull EGrainsType grainsType, @NonNull IContainerSize containerDetails)
             throws IssueMachineException {
+
+        if (!this.stocks.containsStock(grainsType)) {
+            throw this.EXCEPTION_CREATOR.createNoStockOfException(grainsType);
+        }
 
         Optional<IGrain> stocksGrain = this.stocks.getGrain(grainsType);
 
@@ -72,31 +85,45 @@ public class StockMachine {
                 .getRequiredGrainCount();
 
         if (!this.grainValidator.hasEnough(stocksGrain, requiredGrains)) {
-            throw EXCEPTION_CREATOR.createNoEnoughGrainsException();
+            throw EXCEPTION_CREATOR.createNoEnoughStockException(grainsType);
         }
 
         return stocksGrain.orElseThrow().withdraw(requiredGrains);
     }
 
+    /**
+     * Retrieve an {@link EComplementType} stock.
+     */
     @NonNull
     public Optional<IComplement> getStock(@NonNull EComplementType complementType, float amountRequired)
             throws IssueMachineException {
 
+        if (!this.stocks.containsStock(complementType)) {
+            throw this.EXCEPTION_CREATOR.createNoStockOfException(complementType);
+        }
+
         Optional<IComplement> stocksComplement = this.stocks.getComplement(complementType);
 
-        if (this.complementValidator.hasEnough(stocksComplement, amountRequired)) {
-            throw this.EXCEPTION_CREATOR.createNoEnoughComplementsException(complementType);
+        if (!this.complementValidator.hasEnough(stocksComplement, amountRequired)) {
+            throw this.EXCEPTION_CREATOR.createNoEnoughStockException(complementType);
         }
 
         return stocksComplement.orElseThrow().withdraw(amountRequired);
     }
 
-    public boolean cleanStocks() throws UndoneException {
-        try {
-            this.stocks.cleanUp();
-            return true;
-        } catch (UndoneException e) {
-            throw e;
+    /**
+     * Check if there is any stock of an ingredient.
+     */
+    public boolean hasStockOf(@NonNull IClassifiableStock stockType) {
+
+        if (stockType instanceof EComplementType type) {
+            return this.stocks.containsStock(type);
         }
+
+        return this.stocks.containsStock((EGrainsType) stockType);
+    }
+
+    public void cleanStocks() throws UndoneException {
+        this.stocks.cleanUp();
     }
 }

@@ -1,6 +1,8 @@
 package com.cafeteria.grains;
 
-public enum EGrainsType {
+import com.cafeteria.fields.IClassifiableStock;
+
+public enum EGrainsType implements IClassifiableStock {
     COFFEE,
     TEA
 }

@@ -1,5 +1,7 @@
 package com.cafeteria.complements;
 
-public enum EComplementType {
+import com.cafeteria.fields.IClassifiableStock;
+
+public enum EComplementType implements IClassifiableStock {
     SUGAR
 }
