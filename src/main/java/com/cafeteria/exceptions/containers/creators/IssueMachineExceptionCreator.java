@@ -30,4 +30,8 @@ public class IssueMachineExceptionCreator {
         return new IssueMachineException(IMessages.Issues.ANY_STOCK_OF,
                 stockType);
     }
+
+    public IssueMachineException createUnsupportedContainerSizeException(){
+        return  new IssueMachineException(IMessages.Incompatibility.NO_CONTAINER_TYPE_SUPPORTED);
+    }
 }

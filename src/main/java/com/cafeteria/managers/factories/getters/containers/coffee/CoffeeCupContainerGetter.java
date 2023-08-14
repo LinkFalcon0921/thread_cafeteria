@@ -12,7 +12,4 @@ public class CoffeeCupContainerGetter implements IContainerGetter<ECoffeeCupSize
         return ECoffeeCupSize.getBySize(containerSize);
     }
 
-    public static void main(String[] args) {
-        System.out.println(IContainerGetter.class.isAssignableFrom(CoffeeCupContainerGetter.class));
-    }
 }

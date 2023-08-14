@@ -22,6 +22,9 @@ public interface IMessages {
         static String getUnableToCleanMachine(Class<?> c) {
             return "The machine was unable to clean the %s stock.".formatted(c.getSimpleName());
         }
+    }
 
+    interface Incompatibility {
+        String NO_CONTAINER_TYPE_SUPPORTED = "The given container type is not supported for this drink.";
     }
 }
