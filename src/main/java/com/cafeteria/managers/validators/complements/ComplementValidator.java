@@ -15,14 +15,14 @@ public class ComplementValidator {
         EXCEPTION_CREATOR = IssueMachineExceptionCreator.getCreator();
     }
 
-    public void checkIngredients(final StockMachine stocks, final List<IComplement> complements) throws IssueMachineException {
-
-        for (IComplement complement : complements) {
-            final float stockOf = stocks.getStockAmountOf(complement.getType());
-
-            if (complement.getAmount() > stockOf) {
-                throw EXCEPTION_CREATOR.createNoEnoughComplementsException(complement);
-            }
-        }
-    }
+//    public void checkIngredients(final StockMachine stocks, final List<IComplement> complements) throws IssueMachineException {
+//
+//        for (IComplement complement : complements) {
+//            final float stockOf = stocks.getStockAmountOf(complement.getType());
+//
+//            if (complement.getAmount() > stockOf) {
+//                throw EXCEPTION_CREATOR.createNoEnoughComplementsException(complement);
+//            }
+//        }
+//    }
 }

@@ -2,7 +2,6 @@ package com.cafeteria.managers.validators.grains;
 
 import com.cafeteria.containers.EContainerSize;
 import com.cafeteria.containers.EContainerType;
-import com.cafeteria.containers.IContainerSize;
 import com.cafeteria.grains.IGrain;
 import com.cafeteria.grains.coffee.Coffee;
 import com.cafeteria.managers.factories.getters.containers.coffee.CoffeeContainerGetterManager;
@@ -13,8 +12,9 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assumptions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 class GrainValidatorTest {
 
