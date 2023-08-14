@@ -1,4 +1,4 @@
-package com.cafeteria.managers.validators;
+package com.cafeteria.managers.validators.grains;
 
 import com.cafeteria.grains.IGrain;
 import lombok.NonNull;

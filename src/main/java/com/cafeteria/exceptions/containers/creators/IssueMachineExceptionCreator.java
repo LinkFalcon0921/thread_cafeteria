@@ -1,5 +1,6 @@
 package com.cafeteria.exceptions.containers.creators;
 
+import com.cafeteria.complements.EComplementType;
 import com.cafeteria.complements.IComplement;
 import com.cafeteria.exceptions.IMessages;
 import com.cafeteria.exceptions.containers.IssueMachineException;
@@ -25,8 +26,8 @@ public class IssueMachineExceptionCreator {
         return new IssueMachineException(IMessages.Issues.NOT_ENOUGH_GRAINS);
     }
 
-    public IssueMachineException createNoEnoughComplementsException(IComplement complement) {
+    public IssueMachineException createNoEnoughComplementsException(EComplementType complement) {
         return new IssueMachineException(IMessages.Issues.NOT_ENOUGH_COMPLEMENT,
-                complement.getType());
+                complement);
     }
 }
