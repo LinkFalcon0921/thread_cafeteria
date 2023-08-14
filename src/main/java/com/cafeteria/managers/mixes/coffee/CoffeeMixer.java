@@ -1,26 +1,14 @@
 package com.cafeteria.managers.mixes.coffee;
 
-import com.cafeteria.exceptions.containers.creators.IssueMachineExceptionCreator;
+import com.cafeteria.grains.EGrainsType;
 import com.cafeteria.grains.coffee.Coffee;
-import lombok.NonNull;
-
-import java.util.Optional;
+import com.cafeteria.managers.mixes.Mixer;
 
 
-public class CoffeeMixer implements IMixer<ECoffeeMix, Coffee> {
-
-    private final IssueMachineExceptionCreator EXCEPTION_CREATOR;
+public class CoffeeMixer extends Mixer<ECoffeeMix, Coffee> {
 
     public CoffeeMixer() {
-        EXCEPTION_CREATOR = IssueMachineExceptionCreator.getCreator();
+        super(EGrainsType.COFFEE);
     }
 
-    @Override
-    public float mixGrains(@NonNull ECoffeeMix e, @NonNull Optional<Coffee> g) {
-        if (g.isEmpty()) {
-            throw EXCEPTION_CREATOR.createNoEnoughGrainsException();
-        }
-
-        return g.get().getAmount() * e.mixVal;
-    }
 }

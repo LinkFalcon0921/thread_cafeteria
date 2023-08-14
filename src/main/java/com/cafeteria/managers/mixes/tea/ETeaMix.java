@@ -1,4 +1,4 @@
-package com.cafeteria.managers.mixes.coffee;
+package com.cafeteria.managers.mixes.tea;
 
 import com.cafeteria.containers.EContainerSize;
 import com.cafeteria.managers.mixes.IGrainMixDetails;
@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum ECoffeeMix implements IGrainMixDetails {
+public enum ETeaMix implements IGrainMixDetails {
     SMALL(1.3f),
     MEDIUM(1.9f),
     BIG(2.2f);
@@ -16,7 +16,7 @@ public enum ECoffeeMix implements IGrainMixDetails {
     final float mixVal;
 
     @NonNull
-    public static ECoffeeMix getBySize(EContainerSize size) throws IllegalArgumentException {
-        return ECoffeeMix.valueOf(size.name());
+    public static ETeaMix getBySize(EContainerSize size) throws IllegalArgumentException {
+        return ETeaMix.valueOf(size.name());
     }
 }

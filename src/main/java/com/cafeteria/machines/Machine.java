@@ -16,7 +16,7 @@ import com.cafeteria.managers.builders.coffee.IContainerBuilder;
 import com.cafeteria.managers.factories.getters.containers.IGrainContainerGetterManager;
 import com.cafeteria.managers.factories.getters.mixers.IMixerGetter;
 import com.cafeteria.managers.mixes.IGrainMixDetails;
-import com.cafeteria.managers.mixes.coffee.IMixer;
+import com.cafeteria.managers.mixes.IMixer;
 import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
 
@@ -28,7 +28,7 @@ import java.util.function.Function;
 /**
  * Generics Param<br/>
  * * Enum container size<br/>
- * * Mixer class<br/>
+ * * MixerFactory class<br/>
  * * Enum grain mixer<br/>
  * * Grain class
  */
