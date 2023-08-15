@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class Glass extends Container<ECoffeeGlassSize> {
+public abstract class Glass<ES extends IContainerSize> extends Container<ES> {
     public Glass(EContainerSize size, float maxAmount) {
         super(size, maxAmount);
     }
@@ -15,8 +15,4 @@ public class Glass extends Container<ECoffeeGlassSize> {
         super(size, maxAmount, actualAmount);
     }
 
-    @Override
-    public ECoffeeGlassSize getSize() {
-        return ECoffeeGlassSize.getBySize(this.SIZE);
-    }
 }
