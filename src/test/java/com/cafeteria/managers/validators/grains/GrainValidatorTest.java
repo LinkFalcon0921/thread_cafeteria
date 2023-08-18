@@ -1,10 +1,7 @@
 package com.cafeteria.managers.validators.grains;
 
-import com.cafeteria.containers.EContainerSize;
-import com.cafeteria.containers.EContainerType;
 import com.cafeteria.grains.IGrain;
 import com.cafeteria.grains.coffee.Coffee;
-import com.cafeteria.managers.factories.getters.containers.coffee.CoffeeContainerGetterManager;
 import org.junit.jupiter.api.*;
 
 import java.util.Objects;
@@ -18,13 +15,13 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class GrainValidatorTest {
 
-    protected static final EContainerSize MEDIUM_SIZE_CONTAINER = EContainerSize.MEDIUM;
-    protected static final EContainerType CUP_CONTAINER = EContainerType.CUP;
-    private CoffeeContainerGetterManager containerGetterManager;
+//    protected static final EContainerSize MEDIUM_SIZE_CONTAINER = EContainerSize.MEDIUM;
+//    protected static final EContainerType CUP_CONTAINER = EContainerType.CUP;
+//    private CoffeeContainerGetterManager containerGetterManager;
 
     private interface IMessages {
 
-        String REQUIRED_INGREDIENTS_WERE_NOT_FOUND_MESSAGE = "The container required ingredients were not found";
+        //  String REQUIRED_INGREDIENTS_WERE_NOT_FOUND_MESSAGE = "The container required ingredients were not found";
 
         String THE_VALIDATOR_IS_NULL_MESSAGE = "The validator is null";
         String THERE_IS_NOT_ENOUGH_GRAIN_IN_THE_STOCK = "There is not enough grain in the stock.";
@@ -39,7 +36,6 @@ class GrainValidatorTest {
         randomizer = new Random();
     }
 
-    @Test
     @Order(1)
     @RepeatedTest(5)
     void checkStockIsAvailable() {
@@ -57,7 +53,6 @@ class GrainValidatorTest {
         assertTrue(validator.hasEnough(grainOptional, expectedAmount));
     }
 
-    @Test
     @Order(2)
     @RepeatedTest(3)
     void checkFailStock() {
