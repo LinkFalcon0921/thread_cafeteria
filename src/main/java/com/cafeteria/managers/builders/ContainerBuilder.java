@@ -7,25 +7,25 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class ContainerBuilder<C extends IContainer<CSIZE>, CSIZE extends IContainerSize>
-        implements IContainerBuilder<C, CSIZE> {
+public abstract class ContainerBuilder<C extends IContainer<C_SIZE>, C_SIZE extends IContainerSize>
+        implements IContainerBuilder<C, C_SIZE> {
 
     protected EContainerSize size;
     protected float actualAmount;
     protected float maxAmount;
 
-    public ContainerBuilder<C, CSIZE> setSize(EContainerSize size) {
+    public ContainerBuilder<C, C_SIZE> setSize(EContainerSize size) {
         this.size = size;
         return this;
     }
 
-    public ContainerBuilder<C, CSIZE> setActualAmount(float actualAmount) {
+    public ContainerBuilder<C, C_SIZE> setActualAmount(float actualAmount) {
         this.actualAmount = actualAmount;
         return this;
 
     }
 
-    public ContainerBuilder<C, CSIZE> setMaxAmount(float maxAmount) {
+    public ContainerBuilder<C, C_SIZE> setMaxAmount(float maxAmount) {
         this.maxAmount = maxAmount;
         return this;
     }

@@ -5,8 +5,7 @@ import com.cafeteria.containers.EContainerType;
 import com.cafeteria.grains.IGrain;
 import com.cafeteria.grains.coffee.Coffee;
 import com.cafeteria.managers.factories.getters.containers.coffee.CoffeeContainerGetterManager;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -16,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class GrainValidatorTest {
 
     protected static final EContainerSize MEDIUM_SIZE_CONTAINER = EContainerSize.MEDIUM;
@@ -40,6 +40,8 @@ class GrainValidatorTest {
     }
 
     @Test
+    @Order(1)
+    @RepeatedTest(5)
     void checkStockIsAvailable() {
 
         checkValidatorNotNull();
@@ -56,6 +58,8 @@ class GrainValidatorTest {
     }
 
     @Test
+    @Order(2)
+    @RepeatedTest(3)
     void checkFailStock() {
 
         checkValidatorNotNull();
@@ -64,7 +68,8 @@ class GrainValidatorTest {
 
         Optional<IGrain> grainOptional = Optional.of(new Coffee(coffeeAmount));
 
-        final int expectedAmount = randomizer.nextInt(3);
+        int expectedGrain = 3;
+        final int expectedAmount = randomizer.nextInt(expectedGrain) + expectedGrain;
 
         assertFalse(validator.hasEnough(grainOptional, expectedAmount),
                 IMessages.THERE_IS_NOT_ENOUGH_GRAIN_IN_THE_STOCK);

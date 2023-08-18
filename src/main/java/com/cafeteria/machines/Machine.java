@@ -115,7 +115,7 @@ public abstract class Machine
     }
 
     @Override
-    public boolean fillComponentStock(IComplement c) {
+    public boolean fillComplementStock(IComplement c) {
         return this.stocks.addStock(c);
     }
 
@@ -125,8 +125,8 @@ public abstract class Machine
     }
 
     @Override
-    public boolean fillComponentStock(List<IComplement> cList) {
-        return cList.stream().allMatch(this::fillComponentStock);
+    public boolean fillComplementStock(List<IComplement> cList) {
+        return cList.stream().allMatch(this::fillComplementStock);
     }
 
     @Override

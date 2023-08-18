@@ -10,9 +10,9 @@ public interface IMachine {
 
     boolean fillGrainStock(List<IGrain> g);
 
-    boolean fillComponentStock(IComplement c);
+    boolean fillComplementStock(IComplement c);
 
-    boolean fillComponentStock(List<IComplement> c);
+    boolean fillComplementStock(List<IComplement> c);
 
     void restart();
 }

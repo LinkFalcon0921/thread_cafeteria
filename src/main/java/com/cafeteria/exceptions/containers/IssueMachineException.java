@@ -9,6 +9,6 @@ public class IssueMachineException extends RuntimeException{
     }
 
     public IssueMachineException(String message, Object... args) {
-        super(message);
+        super(message.formatted(args));
     }
 }

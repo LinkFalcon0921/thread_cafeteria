@@ -12,4 +12,8 @@ public class Coffee extends Grain {
         super(EGrainsType.COFFEE, amount);
     }
 
+    @Override
+    protected IGrain getInstance(int amount) {
+        return new Coffee(amount);
+    }
 }

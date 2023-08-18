@@ -7,9 +7,7 @@ import com.cafeteria.complements.Sugar;
 import com.cafeteria.containers.EContainerSize;
 import com.cafeteria.containers.coffee.CoffeeCup;
 import com.cafeteria.grains.coffee.Coffee;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.List;
 import java.util.Random;
@@ -17,6 +15,7 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+@TestClassOrder(ClassOrderer.OrderAnnotation.class)
 class CoffeeMachineTest {
 
     interface IMessageTest {
@@ -33,16 +32,19 @@ class CoffeeMachineTest {
 
         coffeeMachine = new CoffeeMachine();
         sugarAmount = random.nextFloat(4f);
-        Coffee coffeeByDefault = new Coffee(random.nextInt(40) * 5 + 40);
+        Coffee coffeeByDefault = new Coffee(random.nextInt(100) + 100);
         Sugar sugarByDefault = new Sugar(sugarAmount * 10f);
 
         coffeeMachine.fillGrainStock(coffeeByDefault);
-        coffeeMachine.fillComponentStock(sugarByDefault);
+        coffeeMachine.fillComplementStock(sugarByDefault);
     }
 
     @Nested
+    @Order(1)
+    @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
     class CupPreparation {
         @Test
+        @Order(1)
         void createSmallCoffeeCupWithSugar() {
 
             Sugar sugar = new Sugar(EPortion.tbsp, sugarAmount);
@@ -59,6 +61,7 @@ class CoffeeMachineTest {
         }
 
         @Test
+        @Order(2)
         void createMediumCoffeeCupWithSugar() {
 
             Sugar sugar = new Sugar(EPortion.tbsp, sugarAmount);
@@ -74,27 +77,32 @@ class CoffeeMachineTest {
             System.out.println(cup.getSize());
         }
 
-        @Test
-        void createBigCoffeeCupWithSugar() {
+    }
 
-            Sugar sugar = new Sugar(EPortion.tbsp, sugarAmount);
+    @Test
+    @Order(3)
+    void createBigCoffeeCupWithSugar() {
 
-            List<IComplement> complementPortions = List.of(sugar);
+        Sugar sugar = new Sugar(EPortion.tbsp, sugarAmount);
 
-            CoffeeCup cup = coffeeMachine.prepareCup(EContainerSize.BIG,
-                    complementPortions);
+        List<IComplement> complementPortions = List.of(sugar);
 
-            assertNotNull(cup.getGrains());
-            assertNotNull(cup.getComplements());
+        CoffeeCup cup = coffeeMachine.prepareCup(EContainerSize.BIG,
+                complementPortions);
 
-            System.out.println(cup.getSize());
-        }
+        assertNotNull(cup.getGrains());
+        assertNotNull(cup.getComplements());
+
+        System.out.println(cup.getSize());
     }
 
     @Nested
+    @Order(999)
+    @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
     class CleanActionMachine {
 
         @Test
+        @Order(1)
         void cleanMachineStocks() {
             checkCoffeeMachineNotNull();
             assertDoesNotThrow(CoffeeMachineTest.coffeeMachine::restart);
